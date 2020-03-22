@@ -28,6 +28,7 @@
 		C32DA83B241A842000A4C2FE /* BebopDrone.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA837241A842000A4C2FE /* BebopDrone.m */; };
 		C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA839241A842000A4C2FE /* SDCardModule.m */; };
 		C32DA83F241A843D00A4C2FE /* H264VideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA83D241A843D00A4C2FE /* H264VideoView.m */; };
+		C3C9857924276E8800473045 /* PlanDeVolVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9857824276E8800473045 /* PlanDeVolVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		C32DA83A241A842000A4C2FE /* SDCardModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDCardModule.h; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Drones/SDCardModule.h; sourceTree = "<group>"; };
 		C32DA83D241A843D00A4C2FE /* H264VideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = H264VideoView.m; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Views/H264VideoView.m; sourceTree = "<group>"; };
 		C32DA83E241A843D00A4C2FE /* H264VideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = H264VideoView.h; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Views/H264VideoView.h; sourceTree = "<group>"; };
+		C3C9857824276E8800473045 /* PlanDeVolVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDeVolVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				A0080EDA20E7B43800852BAC /* DeviceVCViewController.swift */,
 				A037A8CC20BC1D6400B2F101 /* DeviceVC.swift */,
 				A081EF9920F7938300D48F84 /* TestingVC.swift */,
+				C3C9857824276E8800473045 /* PlanDeVolVC.swift */,
 			);
 			path = DroneProgrammer;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				A0FE75C820F50860001EB855 /* Interpreter.swift in Sources */,
 				A0EE5AA020B5839300FC3959 /* AppDelegate.swift in Sources */,
 				C32DA836241A83EB00A4C2FE /* DroneDiscoverer.m in Sources */,
+				C3C9857924276E8800473045 /* PlanDeVolVC.swift in Sources */,
 				A01E31DE20F2433D00F09C67 /* SelectionVC.swift in Sources */,
 				C32DA833241A83CB00A4C2FE /* AudioStreamAUBackend.m in Sources */,
 				A01E31E320F25D9E00F09C67 /* FlightPlanVC.swift in Sources */,
