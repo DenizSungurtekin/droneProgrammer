@@ -286,6 +286,7 @@
                     <navigationItem key="navigationItem" id="cdQ-yw-WUr"/>
                     <connections>
                         <outlet property="tableView" destination="JSf-Zf-ZyN" id="S4x-GA-7FS"/>
+                        <segue destination="zrV-bP-eZS" kind="show" id="afE-tW-pUe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uUn-9u-pw9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -617,22 +618,15 @@
             </objects>
             <point key="canvasLocation" x="3557" y="1098"/>
         </scene>
-        <!--Flight PlanVC-->
+        <!--PlanDeVolVC-->
         <scene sceneID="eBH-Gr-rUH">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gey-EK-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="zrV-bP-eZS" customClass="FlightPlanVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zrV-bP-eZS" userLabel="PlanDeVolVC" customClass="PlanDeVolVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2pB-fU-5Nb">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tiI-eh-TfS">
-                                <rect key="frame" x="11" y="200" width="294" height="548"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ElJ-M4-vea">
                                 <rect key="frame" x="11" y="20" width="178" height="82"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -640,6 +634,9 @@
                                 <state key="normal" title="Décollage">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="decollageAppuyer:" destination="zrV-bP-eZS" eventType="touchUpInside" id="Xm6-9h-Yvi"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v09-3A-eU6">
                                 <rect key="frame" x="11" y="110" width="178" height="82"/>
@@ -648,6 +645,9 @@
                                 <state key="normal" title="Attérissage">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="aterissageAppuyerWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="Jfc-H7-4xd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSg-u5-mrq">
                                 <rect key="frame" x="213" y="20" width="178" height="82"/>
@@ -656,6 +656,9 @@
                                 <state key="normal" title="Monter">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="hautAppuyerWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="owz-mh-iOj"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CU9-Jx-s8q">
                                 <rect key="frame" x="213" y="110" width="178" height="82"/>
@@ -664,6 +667,9 @@
                                 <state key="normal" title="Déscendre">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="basAppuyerWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="vkK-j6-svc"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W7e-L6-tZd">
                                 <rect key="frame" x="416" y="20" width="178" height="82"/>
@@ -672,6 +678,9 @@
                                 <state key="normal" title="Avancer">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="appuyerForwardWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="qy2-PY-8ZO"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohi-8g-xx5">
                                 <rect key="frame" x="416" y="110" width="178" height="82"/>
@@ -680,6 +689,9 @@
                                 <state key="normal" title="Reculer">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="appuyerBackWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="V1S-n9-J5f"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRO-xx-x31">
                                 <rect key="frame" x="621" y="110" width="178" height="82"/>
@@ -688,6 +700,9 @@
                                 <state key="normal" title="Gauche">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="gaucheAppuyerWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="Tlp-Jk-ywi"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-0J-3Ye">
                                 <rect key="frame" x="621" y="20" width="178" height="82"/>
@@ -696,6 +711,9 @@
                                 <state key="normal" title="Droite">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="droiteAppuyerWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="Af7-X9-yVQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DT5-3A-znJ">
                                 <rect key="frame" x="824" y="20" width="192" height="172"/>
@@ -729,13 +747,42 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vji-9z-WYI">
+                                <rect key="frame" x="11" y="211" width="304" height="537"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="nLH-hP-3Pd">
+                                        <rect key="frame" x="0.0" y="28" width="304" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nLH-hP-3Pd" id="ksP-OQ-OHe">
+                                            <rect key="frame" x="0.0" y="0.0" width="304" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="2pB-fU-5Nb" id="tOs-m9-TCq"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOl-1v-Rx6">
+                                <rect key="frame" x="810" y="534" width="175" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.46068960428237915" green="0.94368475675582886" blue="0.24074661731719971" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Sauvegarder"/>
+                                <connections>
+                                    <action selector="saveWith_sender:" destination="zrV-bP-eZS" eventType="touchUpInside" id="C9P-j1-OUt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Veg-jo-X72"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zPs-iP-8vd"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="progView" destination="tiI-eh-TfS" id="ACV-Bi-IV6"/>
+                        <outlet property="posXentree" destination="AsN-iI-4WI" id="Jka-EK-3oA"/>
+                        <outlet property="posYentree" destination="0d3-NB-5Ii" id="juR-7I-Xue"/>
+                        <outlet property="posZentree" destination="V8K-Lr-s8l" id="xcn-fz-gRR"/>
                     </connections>
                 </viewController>
             </objects>
