@@ -8,20 +8,6 @@
 
 import Foundation
 import UIKit
-class Obstacle{
-    
-    var posX :Int;
-    var posY :Int;
-    var posZ: Int;
-    
-    init(x: Int, y:Int, z: Int){
-        self.posX = x;
-        self.posY = y;
-        self.posZ = z;
-    }
-    
-    
-}
 
 class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     // UI nécessaire
@@ -49,51 +35,36 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
         7---> Descendre
      */
     var listeObstacle :[Obstacle] = [];
+    var tmpCmd: [Int] = [];
+    var tmpObs: [Obstacle] = [];
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Commande");
-        tableView.delegate = self as! UITableViewDelegate;
-        tableView.dataSource = self as! UITableViewDataSource;
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listeCommande.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-           // create a new cell if needed or reuse an old one
-           let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "Commande") as UITableViewCell!
-
-           // set the text from the data model
-           cell.textLabel?.text = self.cmd[listeCommande[indexPath.row]]
-
-           return cell
-    }
-
-       // method to run when table view cell is tapped
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-           print("You tapped cell number \(indexPath.row).")
-    }
-    
-    // this method handles row deletion
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-
-        if editingStyle == .delete {
-
-            // remove the item from the data model
-            listeCommande.remove(at: indexPath.row)
-
-            // delete the table view row
-            tableView.deleteRows(at: [indexPath], with: .fade)
-
-        } else if editingStyle == .insert {
-            // Not used in our example, but if you were adding a new row, this is where you would do it.
+        if tmpCmd.count != 0 {
+            listeCommande = tmpCmd;
+        }
+        if tmpObs.count != 0 {
+            listeObstacle = tmpObs;
         }
     }
-    
      override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toHistory"{
+            //Get SecondViewVC
+            let controller = segue.destination as! commandeListeView;
+            //Set message to SecondViewVC
+            controller.listeCommande = self.listeCommande;
+        }
+        else if segue.identifier == "toObstacle"{
+            let viewObstacle = segue.destination as! ObstacleListeView;
+            /*for el in self.listeObstacle{
+                print (el.write());
+            }*/
+            viewObstacle.listeObstacle = self.listeObstacle;
+        }
     }
     
     //Nécessaire pour la position des obstacles et éventullement arguments des commandes
@@ -132,6 +103,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
             let posY = (posYentree.text! as NSString).integerValue;
             let posZ = (posZentree.text! as NSString).integerValue;
             let obs = Obstacle.init(x: posX, y: posY, z: posZ);
+            //print (obs.write());
             listeObstacle.insert(obs, at: listeObstacle.endIndex);
             
         }
@@ -149,6 +121,14 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
         /*
                     TO DO
          */
+    }
+    @IBAction func test(_sender: Any){
+        for el in listeCommande{
+            print (el);
+        }
+        for el in listeObstacle{
+            print(el.write());
+        }
     }
     
 }
