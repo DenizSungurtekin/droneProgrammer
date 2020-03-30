@@ -290,7 +290,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uUn-9u-pw9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2616" y="929"/>
+            <point key="canvasLocation" x="2767" y="895"/>
         </scene>
         <!--TestingVC-->
         <scene sceneID="OM0-7A-HkS">
@@ -536,17 +536,20 @@
                                     <segue destination="Fqq-zU-p1Q" kind="show" identifier="toObstacle" id="gR7-ES-tJO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1YD-nC-VoZ">
-                                <rect key="frame" x="853" y="691" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Test"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p13-ys-UQE">
                                 <rect key="frame" x="20" y="613" width="227" height="108"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Go to main menu"/>
                                 <connections>
                                     <segue destination="Q45-q0-X3L" kind="showDetail" id="hHN-rz-AWI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1YD-nC-VoZ">
+                                <rect key="frame" x="810" y="671" width="181" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Flitgh"/>
+                                <connections>
+                                    <segue destination="rNx-d8-fIt" kind="show" id="PQJ-Gu-9gt"/>
                                 </connections>
                             </button>
                         </subviews>

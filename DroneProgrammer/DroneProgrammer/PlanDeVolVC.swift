@@ -122,13 +122,6 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
                     TO DO
          */
     }
-    @IBAction func test(_sender: Any){
-        for el in listeCommande{
-            print (el);
-        }
-        for el in listeObstacle{
-            print(el.write());
-        }
-    }
+    
     
 }
