@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D187A672433966F00C91D82 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D187A662433966F00C91D82 /* File.swift */; };
 		A0080EDB20E7B43800852BAC /* DeviceVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0080EDA20E7B43800852BAC /* DeviceVCViewController.swift */; };
 		A01E31DE20F2433D00F09C67 /* SelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01E31DD20F2433D00F09C67 /* SelectionVC.swift */; };
 		A01E31E320F25D9E00F09C67 /* FlightPlanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01E31E220F25D9E00F09C67 /* FlightPlanVC.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8D187A662433966F00C91D82 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		A0080EDA20E7B43800852BAC /* DeviceVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVCViewController.swift; sourceTree = "<group>"; };
 		A01E31DD20F2433D00F09C67 /* SelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectionVC.swift; path = ../SelectionVC.swift; sourceTree = "<group>"; };
 		A01E31E220F25D9E00F09C67 /* FlightPlanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightPlanVC.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				C3C9857824276E8800473045 /* PlanDeVolVC.swift */,
 				C34DC4AE2431F13F001A3450 /* comandeListeView.swift */,
 				C34DC4B22431FB63001A3450 /* Obstacle.swift */,
+				8D187A662433966F00C91D82 /* File.swift */,
 				C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */,
 			);
 			path = DroneProgrammer;
@@ -401,6 +404,7 @@
 				C32DA830241A83A800A4C2FE /* BebopVC.m in Sources */,
 				A0EE5AA220B5839300FC3959 /* ViewController.swift in Sources */,
 				C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */,
+				8D187A672433966F00C91D82 /* File.swift in Sources */,
 				C32DA82F241A83A800A4C2FE /* DeviceListVC.m in Sources */,
 				C32DA83F241A843D00A4C2FE /* H264VideoView.m in Sources */,
 				C34DC4AF2431F13F001A3450 /* comandeListeView.swift in Sources */,

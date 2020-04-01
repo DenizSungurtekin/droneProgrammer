@@ -15,6 +15,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     
    //Eléments de la view
     
+    @IBOutlet var NomPlan: UITextField!
     @IBOutlet var posXentree: UITextField!;
     @IBOutlet var posYentree: UITextField!;
     @IBOutlet var posZentree: UITextField!;
@@ -23,7 +24,9 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     @IBOutlet var tableView: UITableView!;
     
     
+    
     let cmd = ["Décollage","Attérissage","Droite","Gauche","Avancer","Reculer","Monter","Descendre"]
+    
     var listeCommande :[Int] = [];
     /*  0---> Décollage
         1---> Attérissage
@@ -39,10 +42,12 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     var tmpObs: [Obstacle] = [];
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if tmpCmd.count != 0 {
             listeCommande = tmpCmd;
+            
         }
         if tmpObs.count != 0 {
             listeObstacle = tmpObs;
@@ -74,6 +79,9 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     }
     @IBAction func decollageAppuyer(_ sender: Any) {
         listeCommande.insert(0, at: listeCommande.endIndex);
+        
+        print(NomPlan.text!)
+        
     }
     @IBAction func aterissageAppuyer(_sender: Any ) {
         listeCommande.insert(1, at: listeCommande.endIndex);
@@ -118,10 +126,74 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
         
     }
     @IBAction func save(_sender: Any){
-        /*
-                    TO DO
-         */
+        
+        // Chemin du dossier PlanVol lié au projet (Seul endroit où l'on peut écrire un fichier)
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        
+        if let pathComponent = url.appendingPathComponent("Plan_de_Vol.json"){
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            // Vérifie si le fichier existe
+            if fileManager.fileExists(atPath: filePath) {
+                
+                // Cas ou un fichier existe déja
+                do {
+                    var url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
+                    var jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
+                    var jsonData = try Data(contentsOf: jsonURL)
+                    var files = try JSONDecoder().decode([Fichier].self, from: jsonData) // On lit tout les fichiers présents dans le JSON afin de pouvoir les              réecrire (Obligation lié au format JSON)
+                    var topLevel: [AnyObject] = [];
+                    
+                    // On ajoute les fichiers déjà présent
+                    for singlefile in files {
+                        var fileDictionnary : [String : AnyObject] = [:];
+                        //var fichier = File.init(name: nomFichierTest, listeCommande: commandes);
+                        fileDictionnary["nom"] = singlefile.nom as AnyObject;
+                        fileDictionnary["ListeCommande"] = singlefile.listeCommande as AnyObject;
+                        topLevel.append(fileDictionnary as AnyObject);
+
+                    }
+                    
+                    // On ajoute le fichier ajouté
+                    var fileDictionnary : [String : AnyObject] = [:];
+                    let nomFichierTest = NomPlan.text!;
+                    let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande);
+                    fileDictionnary["nom"] = fichier.name as AnyObject;
+                    fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
+                    topLevel.append(fileDictionnary as AnyObject);
+                    jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
+                       
+                    var fileManager = FileManager.default;
+                    url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
+                    jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
+                    try jsonData.write(to: jsonURL); // On encode sous le format JSON la totalité des fichiers
+                    
+                } catch {
+                    print(error)
+                }
+                
+            } else {
+                // Cas ou le fichier n'existe pas (Première sauvegarde)
+                let nomFichierTest = NomPlan.text!;
+                let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande);
+                var topLevel: [AnyObject] = []
+                var fileDictionnary : [String : AnyObject] = [:];
+                fileDictionnary["nom"] = fichier.name as AnyObject;
+                fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
+                topLevel.append(fileDictionnary as AnyObject);
+                
+                 do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
+                    let fileManager = FileManager.default;
+                    let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
+                    let jsonURL = url.appendingPathComponent("Plan_de_Vol.json"); // URL du fichier JSON
+                    try jsonData.write(to: jsonURL);
+        
+                 } catch {
+                     print(error)
+                 }
+            }
+        }
     }
-    
-    
 }

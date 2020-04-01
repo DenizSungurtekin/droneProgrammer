@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QH2-EG-tFr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QH2-EG-tFr">
     <device id="ipad9_7" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,9 +29,9 @@
         <!--View Controller-->
         <scene sceneID="ydV-Ed-wqF">
             <objects>
-                <viewController id="h73-oJ-mOy" customClass="ViewController" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="h73-oJ-mOy" customClass="ViewController" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3qw-kf-hoU">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="728"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sKx-8h-4DA" customClass="H264VideoView">
@@ -191,9 +191,9 @@
         <!--View Controller-->
         <scene sceneID="69m-YU-OaF">
             <objects>
-                <viewController id="6nV-8C-INx" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="6nV-8C-INx" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bCT-sx-Uy7">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="728"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="LXq-o2-s1E">
@@ -201,7 +201,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </stackView>
                             <searchBar contentMode="redraw" fixedFrame="YES" text="Recherchez votre plan de vol ici" translatesAutoresizingMaskIntoConstraints="NO" id="klI-Kd-EYK">
-                                <rect key="frame" x="0.0" y="70" width="712" height="44"/>
+                                <rect key="frame" x="0.0" y="70" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -218,9 +218,9 @@
         <!--SelectionVC-->
         <scene sceneID="Kc2-a7-7sf">
             <objects>
-                <viewController id="Q45-q0-X3L" customClass="SelectionVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Q45-q0-X3L" customClass="SelectionVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" alpha="0.94999999999999996" contentMode="scaleToFill" id="jcB-Rf-8RU">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="728"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="phantom-p4-1701166_1920" translatesAutoresizingMaskIntoConstraints="NO" id="ZH5-fY-kj1">
@@ -381,8 +381,7 @@
         <!--PlanDeVolVC-->
         <scene sceneID="eBH-Gr-rUH">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gey-EK-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="zrV-bP-eZS" userLabel="PlanDeVolVC" customClass="PlanDeVolVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="zrV-bP-eZS" userLabel="PlanDeVolVC" customClass="PlanDeVolVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2pB-fU-5Nb">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -552,6 +551,12 @@
                                     <segue destination="rNx-d8-fIt" kind="show" id="PQJ-Gu-9gt"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom du Plan de vol" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uqH-p4-pqN">
+                                <rect key="frame" x="607" y="621" width="165" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Veg-jo-X72"/>
@@ -559,11 +564,13 @@
                     <navigationItem key="navigationItem" id="uKC-dw-XbO"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="NomPlan" destination="uqH-p4-pqN" id="baP-vr-0rS"/>
                         <outlet property="posXentree" destination="AsN-iI-4WI" id="Jka-EK-3oA"/>
                         <outlet property="posYentree" destination="0d3-NB-5Ii" id="juR-7I-Xue"/>
                         <outlet property="posZentree" destination="V8K-Lr-s8l" id="xcn-fz-gRR"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gey-EK-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1650.5859375" y="894.53125"/>
         </scene>
@@ -628,19 +635,18 @@
             <point key="canvasLocation" x="2259" y="2133"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="arrow.down" catalog="system" width="60" height="64"/>
-        <image name="arrow.left" catalog="system" width="64" height="48"/>
-        <image name="arrow.right" catalog="system" width="64" height="48"/>
-        <image name="arrow.up" catalog="system" width="60" height="64"/>
-        <image name="backward.fill" catalog="system" width="64" height="38"/>
-        <image name="forward.fill" catalog="system" width="64" height="38"/>
-        <image name="phantom-p4-1701166_1920" width="1920" height="1073"/>
-        <image name="questionmark" catalog="system" width="48" height="64"/>
-    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gR7-ES-tJO"/>
-        <segue reference="2x9-6X-hZh"/>
+        <segue reference="NrM-VX-ggE"/>
         <segue reference="hHN-rz-AWI"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="arrow.down" catalog="system" width="120" height="128"/>
+        <image name="arrow.left" catalog="system" width="128" height="98"/>
+        <image name="arrow.right" catalog="system" width="128" height="98"/>
+        <image name="arrow.up" catalog="system" width="120" height="128"/>
+        <image name="backward.fill" catalog="system" width="128" height="79"/>
+        <image name="forward.fill" catalog="system" width="128" height="79"/>
+        <image name="phantom-p4-1701166_1920" width="1920" height="1073"/>
+        <image name="questionmark" catalog="system" width="96" height="128"/>
+    </resources>
 </document>
