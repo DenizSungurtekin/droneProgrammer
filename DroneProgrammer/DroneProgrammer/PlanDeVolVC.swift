@@ -23,7 +23,12 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     //Table View
     @IBOutlet var tableView: UITableView!;
     
+    var sauvegarde:Fichier
     
+    required init?(coder aDecoder: NSCoder) {
+        self.sauvegarde = Fichier.init(nom: "SauvegardeParDefault", listeCommande: listeCommande);
+        super.init(coder: aDecoder)
+    }
     
     let cmd = ["Décollage","Attérissage","Droite","Gauche","Avancer","Reculer","Monter","Descendre"]
     
@@ -45,13 +50,19 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if sauvegarde.listeCommande.count != 0{
+            listeCommande = sauvegarde.listeCommande
+        }
+        
         if tmpCmd.count != 0 {
             listeCommande = tmpCmd;
+            
             
         }
         if tmpObs.count != 0 {
             listeObstacle = tmpObs;
         }
+        
     }
      override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -142,10 +153,10 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
                     var url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
                     var jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
                     var jsonData = try Data(contentsOf: jsonURL)
-                    var files = try JSONDecoder().decode([Fichier].self, from: jsonData) // On lit tout les fichiers présents dans le JSON afin de pouvoir les              réecrire (Obligation lié au format JSON)
+                    let files = try JSONDecoder().decode([Fichier].self, from: jsonData) // On lit tout les fichiers présents dans le JSON afin de pouvoir les              réecrire (Obligation lié au format JSON)
                     var topLevel: [AnyObject] = [];
                     
-                    // On ajoute les fichiers déjà présent
+                    // On ajoute les fichiers déjà présent dans le JSON
                     for singlefile in files {
                         var fileDictionnary : [String : AnyObject] = [:];
                         //var fichier = File.init(name: nomFichierTest, listeCommande: commandes);
@@ -164,7 +175,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
                     topLevel.append(fileDictionnary as AnyObject);
                     jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
                        
-                    var fileManager = FileManager.default;
+                    let fileManager = FileManager.default;
                     url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
                     jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
                     try jsonData.write(to: jsonURL); // On encode sous le format JSON la totalité des fichiers

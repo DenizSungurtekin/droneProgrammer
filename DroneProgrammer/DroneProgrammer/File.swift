@@ -26,6 +26,11 @@ struct Fichier : Decodable {
     case nom
     case listeCommande = "ListeCommande"
     }
+    
+    init(nom: String, listeCommande: [Int]){
+        self.nom = nom;
+        self.listeCommande = listeCommande;
+    }
 }
 
 
