@@ -5,11 +5,14 @@
 //  Created by Mathias Tonini on 22.03.20.
 //  Copyright © 2020 CUI. All rights reserved.
 //
-
 import Foundation
 import UIKit
 
-class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
+class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource{
+    
+    
+    
+    
     // UI nécessaire
     var errorAlertView: UIAlertController?
     
@@ -21,13 +24,16 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     @IBOutlet var posZentree: UITextField!;
     
     //Table View
-    @IBOutlet var tableView: UITableView!;
+    
+    @IBOutlet var tableView: UITableView!
     
     var sauvegarde:Fichier
     
     required init?(coder aDecoder: NSCoder) {
-        self.sauvegarde = Fichier.init(nom: "SauvegardeParDefault", listeCommande: listeCommande);
+        sauvegarde = Fichier.init(nom: "SauvegardeParDefault", listeCommande: listeCommande);
+        
         super.init(coder: aDecoder)
+        
     }
     
     let cmd = ["Décollage","Attérissage","Droite","Gauche","Avancer","Reculer","Monter","Descendre"]
@@ -46,6 +52,8 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     var tmpCmd: [Int] = [];
     var tmpObs: [Obstacle] = [];
     
+    let cellReuseIdentifier = "cell";
+    
     
     
     override func viewDidLoad() {
@@ -62,27 +70,85 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
         if tmpObs.count != 0 {
             listeObstacle = tmpObs;
         }
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier);
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
     }
      override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toHistory"{
-            //Get SecondViewVC
-            let controller = segue.destination as! commandeListeView;
-            //Set message to SecondViewVC
-            controller.listeCommande = self.listeCommande;
-        }
-        else if segue.identifier == "toObstacle"{
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "toObstacle"{
             let viewObstacle = segue.destination as! ObstacleListeView;
             /*for el in self.listeObstacle{
                 print (el.write());
             }*/
             viewObstacle.listeObstacle = self.listeObstacle;
         }
+    }*/
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let data = [listeCommande.count, listeObstacle.count]
+        return data[section]
     }
     
+
+    // create a cell for each table view row
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        // create a new cell if needed or reuse an old one
+        let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
+        
+
+        // set the text from the data model
+        if indexPath.section == 0{
+            cell.textLabel?.text = self.cmd[self.listeCommande[indexPath.row]];
+        }else if  indexPath.section == 1{
+            cell.textLabel?.text = self.listeObstacle[indexPath.row].write();
+        }
+
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Commandes"
+        }else{
+            print("Doing second title")
+            return "Obtacles"
+        }
+    }
+
+
+    // this method handles row deletion
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+
+        if editingStyle == .delete {
+
+            // remove the item from the data model
+            if indexPath.section == 0{
+                self.listeCommande.remove(at: indexPath.row)
+            }else if indexPath.section == 1{
+                self.listeObstacle.remove(at: indexPath.row);
+            }
+
+            // delete the table view row
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        
+    }
+    
+    func updateTableView(){
+        tableView.beginUpdates()
+        tableView.insertRows(at: [IndexPath(row: self.listeCommande.count-1, section: 0)], with: .automatic)
+        tableView.endUpdates()
+    }
     //Nécessaire pour la position des obstacles et éventullement arguments des commandes
     func isStringAnInt(string: String) -> Bool {
         // test if the string is an integer
@@ -90,30 +156,35 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
     }
     @IBAction func decollageAppuyer(_ sender: Any) {
         listeCommande.insert(0, at: listeCommande.endIndex);
-        
-        print(NomPlan.text!)
-        
+        updateTableView()
     }
     @IBAction func aterissageAppuyer(_sender: Any ) {
         listeCommande.insert(1, at: listeCommande.endIndex);
+      updateTableView()
     }
     @IBAction func droiteAppuyer(_sender: Any) {
         listeCommande.insert(2, at: listeCommande.endIndex)
+        updateTableView()
     }
     @IBAction func gaucheAppuyer(_sender: Any) {
         listeCommande.insert(3, at: listeCommande.endIndex)
+        updateTableView()
     }
     @IBAction func appuyerForward(_sender: Any){
-        listeCommande.insert(4, at: listeCommande.endIndex)
+        listeCommande.insert(4, at: listeCommande.endIndex);
+        updateTableView()
     }
     @IBAction func appuyerBack(_sender: Any){
         listeCommande.insert(5, at: listeCommande.endIndex)
+        updateTableView()
     }
     @IBAction func hautAppuyer(_sender: Any){
         listeCommande.insert(6, at: listeCommande.endIndex)
+        updateTableView()
     }
     @IBAction func basAppuyer(_sender: Any){
         listeCommande.insert(7, at: listeCommande.endIndex)
+        updateTableView()
     }
     @IBAction func addObstalcle(_sender: Any){
         
@@ -125,6 +196,10 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
             //print (obs.write());
             listeObstacle.insert(obs, at: listeObstacle.endIndex);
             
+            tableView.beginUpdates()
+            tableView.insertRows(at: [IndexPath(row: self.listeObstacle.count-1, section: 1)], with: .automatic)
+            tableView.endUpdates()
+            
         }
         else {
             errorAlertView = UIAlertController(
@@ -135,6 +210,10 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate {
             self.present(errorAlertView!, animated: true, completion: nil)
         }
         
+    }
+    @IBAction func cleanCommand (_sender: Any){
+        self.listeCommande=[];
+        updateTableView();
     }
     @IBAction func save(_sender: Any){
         
