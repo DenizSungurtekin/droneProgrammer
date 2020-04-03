@@ -479,7 +479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0P-bI-CWb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2432" y="907"/>
+            <point key="canvasLocation" x="2431.640625" y="906.25"/>
         </scene>
         <!--Obstacle Liste View-->
         <scene sceneID="mn2-uM-7aM">

@@ -7,11 +7,32 @@
 //
 
 import Foundation
-class SimulationView: UIViewController {
+import SceneKit
+import UIKit
+
+class SimulationView: UIViewController ,UIAlertViewDelegate{
     
     var commandes: [Int] = [];
-    var obstacles: [Obstacle];
+    var obstacles: [Obstacle] = [];
+    var tmpCmd: [Int] = [];
+    var tmpObs: [Obstacle] = [];
+    
+
+    
     override func viewDidLoad() {
-      super.viewDidLoad()
+        super.viewDidLoad()
+        commandes = tmpCmd;
+        obstacles = tmpObs;
+        for el in obstacles {
+            print (el.write())
+        }
+        print(commandes)
+        
+
     }
+   
+
+    
+    
+    
 }

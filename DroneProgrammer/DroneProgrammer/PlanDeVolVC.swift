@@ -82,11 +82,8 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         
         if segue.identifier == "toSimulation"{
             let simulationView = segue.destination as! SimulationView;
-            /*for el in self.listeObstacle{
-                print (el.write());
-            }*/
-            simulationView.obstacles = self.listeObstacle;
-            simulationView.commandes = self.listeCommande;
+            simulationView.tmpObs = self.listeObstacle;
+            simulationView.tmpCmd = self.listeCommande;
             
         }
     }
