@@ -373,6 +373,9 @@
                                 <state key="normal" title="Simuler">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <segue destination="gdV-tb-ooW" kind="show" identifier="toSimulation" id="qMK-Vb-4vY"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Position X" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AsN-iI-4WI">
                                 <rect key="frame" x="810" y="316" width="175" height="34"/>
@@ -461,6 +464,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gey-EK-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1650.5859375" y="894.53125"/>
+        </scene>
+        <!--Simulation View-->
+        <scene sceneID="eLM-mc-LiZ">
+            <objects>
+                <viewController id="gdV-tb-ooW" customClass="SimulationView" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="obU-bE-ZuO">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="VaE-zo-rwU"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zyY-ev-8e4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o0P-bI-CWb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2432" y="907"/>
         </scene>
         <!--Obstacle Liste View-->
         <scene sceneID="mn2-uM-7aM">

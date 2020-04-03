@@ -78,16 +78,18 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
      override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "toObstacle"{
-            let viewObstacle = segue.destination as! ObstacleListeView;
+        if segue.identifier == "toSimulation"{
+            let simulationView = segue.destination as! SimulationView;
             /*for el in self.listeObstacle{
                 print (el.write());
             }*/
-            viewObstacle.listeObstacle = self.listeObstacle;
+            simulationView.obstacles = self.listeObstacle;
+            simulationView.commandes = self.listeCommande;
+            
         }
-    }*/
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2

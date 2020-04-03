@@ -33,6 +33,7 @@
 		C34DC4AF2431F13F001A3450 /* comandeListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4AE2431F13F001A3450 /* comandeListeView.swift */; };
 		C34DC4B12431FB2B001A3450 /* ObstacleListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */; };
 		C34DC4B32431FB63001A3450 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4B22431FB63001A3450 /* Obstacle.swift */; };
+		C3BCB74F243732E7003C7A20 /* SimulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB74E243732E7003C7A20 /* SimulationView.swift */; };
 		C3C9857924276E8800473045 /* PlanDeVolVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9857824276E8800473045 /* PlanDeVolVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +108,7 @@
 		C34DC4AE2431F13F001A3450 /* comandeListeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comandeListeView.swift; sourceTree = "<group>"; };
 		C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleListeView.swift; sourceTree = "<group>"; };
 		C34DC4B22431FB63001A3450 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
+		C3BCB74E243732E7003C7A20 /* SimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationView.swift; sourceTree = "<group>"; };
 		C3C9857824276E8800473045 /* PlanDeVolVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDeVolVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,6 +202,7 @@
 				A0EE5AAB20B5839300FC3959 /* Info.plist */,
 				A0EE5ACD20B585C400FC3959 /* DroneProgrammer-Bridging-Header.h */,
 				A0080EDA20E7B43800852BAC /* DeviceVCViewController.swift */,
+				C3BCB74E243732E7003C7A20 /* SimulationView.swift */,
 				A037A8CC20BC1D6400B2F101 /* DeviceVC.swift */,
 				A081EF9920F7938300D48F84 /* TestingVC.swift */,
 				C3C9857824276E8800473045 /* PlanDeVolVC.swift */,
@@ -405,6 +408,7 @@
 				C32DA83B241A842000A4C2FE /* BebopDrone.m in Sources */,
 				A037A8CD20BC1D6400B2F101 /* DeviceVC.swift in Sources */,
 				C32DA830241A83A800A4C2FE /* BebopVC.m in Sources */,
+				C3BCB74F243732E7003C7A20 /* SimulationView.swift in Sources */,
 				A0EE5AA220B5839300FC3959 /* ViewController.swift in Sources */,
 				C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */,
 				8D187A672433966F00C91D82 /* File.swift in Sources */,
