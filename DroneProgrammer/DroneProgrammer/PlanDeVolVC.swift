@@ -120,8 +120,8 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         if section == 0 {
             return "Commandes"
         }else{
-            print("Doing second title")
-            return "Obtacles"
+           
+            return "Obstacles"
         }
     }
 
@@ -212,8 +212,22 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         
     }
     @IBAction func cleanCommand (_sender: Any){
-        self.listeCommande=[];
-        updateTableView();
+        
+        let size = self.listeCommande.count-1
+        if size >= 0{
+            while self.listeCommande.count > 0 {
+                self.listeCommande.remove(at: 0)
+                let pos: IndexPath = [0,0]
+                self.tableView.deleteRows(at: [pos], with:.fade)
+            }
+        }else{
+            errorAlertView = UIAlertController(
+                title: "Can't delete command",
+                message: "Please enter at least one command",
+                preferredStyle: .alert)
+            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView!, animated: true, completion: nil)
+        }
     }
     @IBAction func save(_sender: Any){
         
