@@ -30,7 +30,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     var sauvegarde:Fichier
     
     required init?(coder aDecoder: NSCoder) {
-        sauvegarde = Fichier.init(nom: "SauvegardeParDefault", listeCommande: listeCommande);
+        sauvegarde = Fichier.init(listeCommande: listeCommande,listeObstacle: [[1,2]], nom: "SauvegardeParDefault");
         
         super.init(coder: aDecoder)
         
@@ -53,13 +53,18 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     var tmpObs: [Obstacle] = [];
     
     let cellReuseIdentifier = "cell";
-    
+    var obstacleListe : [[Int]] = [];
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if sauvegarde.listeCommande.count != 0{
             listeCommande = sauvegarde.listeCommande
+            //listeObstacle = Obstacle.init(x: sauvegarde.listeObstacle[0][0], y: sauvegarde.listeObstacle[0][1], z: sauvegarde.listeObstacle[0][2])
+            obstacleListe = sauvegarde.listeObstacle
+            for element in obstacleListe {
+                tmpObs.append(Obstacle.init(x: element[0], y: element[1], z: element[2]))
+            }
         }
         
         if tmpCmd.count != 0 {
@@ -251,9 +256,10 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     // On ajoute les fichiers déjà présent dans le JSON
                     for singlefile in files {
                         var fileDictionnary : [String : AnyObject] = [:];
-                        //var fichier = File.init(name: nomFichierTest, listeCommande: commandes);
+                        
                         fileDictionnary["nom"] = singlefile.nom as AnyObject;
                         fileDictionnary["ListeCommande"] = singlefile.listeCommande as AnyObject;
+                        fileDictionnary["ListeObstacle"] = singlefile.listeObstacle as AnyObject;
                         topLevel.append(fileDictionnary as AnyObject);
 
                     }
@@ -261,9 +267,16 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     // On ajoute le fichier ajouté
                     var fileDictionnary : [String : AnyObject] = [:];
                     let nomFichierTest = NomPlan.text!;
-                    let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande);
+                    
+                    var liste: [[Int]] = []
+                    for element in listeObstacle {
+                        liste.append(element.toJson())
+                    }
+                    
+                    let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste);
                     fileDictionnary["nom"] = fichier.name as AnyObject;
                     fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
+                    fileDictionnary["ListeObstacle"] = fichier.liste as AnyObject;
                     topLevel.append(fileDictionnary as AnyObject);
                     jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
                        
@@ -277,13 +290,19 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 }
                 
             } else {
+                
+                var liste: [[Int]] = []
+                for element in listeObstacle {
+                    liste.append(element.toJson())
+                }
                 // Cas ou le fichier n'existe pas (Première sauvegarde)
                 let nomFichierTest = NomPlan.text!;
-                let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande);
+                let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste);
                 var topLevel: [AnyObject] = []
                 var fileDictionnary : [String : AnyObject] = [:];
                 fileDictionnary["nom"] = fichier.name as AnyObject;
                 fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
+                fileDictionnary["ListeObstacle"] = fichier.liste as AnyObject;
                 topLevel.append(fileDictionnary as AnyObject);
                 
                  do {

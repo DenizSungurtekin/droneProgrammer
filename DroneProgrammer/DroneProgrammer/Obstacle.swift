@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Obstacle{
+class Obstacle: Decodable {
     
     var posX :Int;
     var posY :Int;
@@ -21,5 +21,9 @@ class Obstacle{
     func write() -> String {
         return "X position \(posX) ; Y position \(posY) ; Z position \(posZ)"
     }
+    func toJson() -> [Int] {
+        return [self.posX,self.posY,self.posZ]
+    }
+    
     
 }
