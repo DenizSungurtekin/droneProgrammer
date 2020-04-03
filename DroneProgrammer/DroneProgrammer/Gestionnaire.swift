@@ -31,7 +31,6 @@ class Gestionnaire: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(files.count)
         return files.count
      }
      
@@ -57,7 +56,7 @@ class Gestionnaire: UIViewController, UITableViewDelegate, UITableViewDataSource
                do {
                 let fileManager = FileManager.default;
                 let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                let jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
+                let jsonURL = url.appendingPathComponent("flight_plan.json");
                 let jsonData = try Data(contentsOf: jsonURL);
                 self.files = try JSONDecoder().decode([Fichier].self, from: jsonData); // On lit toute les sauvegardes
                    

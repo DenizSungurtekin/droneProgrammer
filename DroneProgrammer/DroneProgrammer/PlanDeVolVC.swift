@@ -239,7 +239,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = NSURL(fileURLWithPath: path)
         
-        if let pathComponent = url.appendingPathComponent("Plan_de_Vol.json"){
+        if let pathComponent = url.appendingPathComponent("flight_plan.json"){
             let filePath = pathComponent.path
             let fileManager = FileManager.default
             // Vérifie si le fichier existe
@@ -248,7 +248,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 // Cas ou un fichier existe déja
                 do {
                     var url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                    var jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
+                    var jsonURL = url.appendingPathComponent("flight_plan.json");
                     var jsonData = try Data(contentsOf: jsonURL)
                     let files = try JSONDecoder().decode([Fichier].self, from: jsonData) // On lit tout les fichiers présents dans le JSON afin de pouvoir les              réecrire (Obligation lié au format JSON)
                     var topLevel: [AnyObject] = [];
@@ -282,7 +282,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                        
                     let fileManager = FileManager.default;
                     url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                    jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
+                    jsonURL = url.appendingPathComponent("flight_plan.json");
                     print(jsonURL)
                     try jsonData.write(to: jsonURL); // On encode sous le format JSON la totalité des fichiers
                     
@@ -310,7 +310,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
                     let fileManager = FileManager.default;
                     let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                    let jsonURL = url.appendingPathComponent("Plan_de_Vol.json"); // URL du fichier JSON
+                    let jsonURL = url.appendingPathComponent("flight_plan.json"); // URL du fichier JSON
                     print(jsonURL)
                     try jsonData.write(to: jsonURL);
         
