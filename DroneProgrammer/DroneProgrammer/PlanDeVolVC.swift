@@ -283,6 +283,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     let fileManager = FileManager.default;
                     url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
                     jsonURL = url.appendingPathComponent("Plan_de_Vol.json");
+                    print(jsonURL)
                     try jsonData.write(to: jsonURL); // On encode sous le format JSON la totalité des fichiers
                     
                 } catch {
@@ -310,6 +311,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     let fileManager = FileManager.default;
                     let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
                     let jsonURL = url.appendingPathComponent("Plan_de_Vol.json"); // URL du fichier JSON
+                    print(jsonURL)
                     try jsonData.write(to: jsonURL);
         
                  } catch {
