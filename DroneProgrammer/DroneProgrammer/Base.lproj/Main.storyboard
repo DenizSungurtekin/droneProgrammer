@@ -35,16 +35,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sKx-8h-4DA" customClass="H264VideoView">
-                                <rect key="frame" x="0.0" y="50" width="1024" height="322"/>
+                                <rect key="frame" x="20" y="54" width="977" height="358"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jeO-Xx-Y1d">
-                                <rect key="frame" x="468" y="579" width="123" height="86"/>
+                                <rect key="frame" x="447" y="549" width="152" height="93"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="arrow.left" catalog="system">
-                                    <color key="titleColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Gauche">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="rollLeftTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="yEF-xS-23w"/>
@@ -53,12 +55,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKf-ZU-yIe">
-                                <rect key="frame" x="292" y="579" width="123" height="86"/>
+                                <rect key="frame" x="266" y="546" width="149" height="96"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.46068960428237915" green="0.94368475675582886" blue="0.24074661731719971" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" backgroundImage="arrow.down" catalog="system">
-                                    <color key="titleColor" red="0.11992049999620512" green="0.77882124352331605" blue="0.071555386480789115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Descendre">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="gazDownTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="eMs-tc-hNm"/>
@@ -70,7 +73,7 @@
                                 <rect key="frame" x="834" y="420" width="126" height="86"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="questionmark" catalog="system">
+                                <state key="normal" title="Bouton suprise">
                                     <color key="titleColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -78,11 +81,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2A-QC-Wn1">
-                                <rect key="frame" x="468" y="420" width="123" height="86"/>
+                                <rect key="frame" x="447" y="421" width="152" height="92"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="arrow.right" catalog="system">
-                                    <color key="titleColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Droite">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="rollRightTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="M9C-99-Ef5"/>
@@ -90,26 +95,13 @@
                                     <action selector="rollRightTouchUp:" destination="h73-oJ-mOy" eventType="touchUpInside" id="haQ-oB-Ylh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lli-Jm-xES">
-                                <rect key="frame" x="292" y="420" width="123" height="86"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" backgroundImage="arrow.up" catalog="system">
-                                    <color key="titleColor" red="1" green="0.1135582279" blue="0.1043690367" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="gazUpTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="EU9-pV-usT"/>
-                                    <action selector="gazUpTouchUp:" destination="h73-oJ-mOy" eventType="touchUpInside" id="6iw-DB-XMC"/>
-                                    <action selector="gazUpTouchUp:" destination="h73-oJ-mOy" eventType="touchUpOutside" id="LNq-Le-q1I"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rlH-J0-AjY">
-                                <rect key="frame" x="663" y="447" width="84" height="34"/>
+                                <rect key="frame" x="644" y="421" width="151" height="87"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="forward.fill" catalog="system">
-                                    <color key="titleColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Avancer">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="pitchForwardTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="awf-nF-H9f"/>
@@ -117,21 +109,8 @@
                                     <action selector="pitchForwardTouchUp:" destination="h73-oJ-mOy" eventType="touchUpInside" id="mPv-Xa-7t1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bUw-Ay-qo5">
-                                <rect key="frame" x="657" y="609" width="103" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="backward.fill" catalog="system">
-                                    <color key="titleColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pitchBackTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="47K-Uz-Dru"/>
-                                    <action selector="pitchBackTouchUp:" destination="h73-oJ-mOy" eventType="touchUpOutside" id="ICl-FT-kho"/>
-                                    <action selector="pitchBackTouchUp:" destination="h73-oJ-mOy" eventType="touchUpInside" id="NCt-pH-kb0"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="etA-Sa-mEa">
-                                <rect key="frame" x="69" y="522" width="166" height="69"/>
+                                <rect key="frame" x="69" y="425" width="166" height="217"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="47"/>
                                 <state key="normal" title="Take Off"/>
@@ -140,25 +119,63 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ6-vs-6AV">
-                                <rect key="frame" x="837" y="582" width="123" height="86"/>
+                                <rect key="frame" x="837" y="549" width="123" height="92"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Emergency">
-                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="emergencyClicked:" destination="h73-oJ-mOy" eventType="touchDown" id="iqI-pF-WNK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bUw-Ay-qo5">
+                                <rect key="frame" x="644" y="546" width="151" height="95"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Reculer">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="pitchBackTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="47K-Uz-Dru"/>
+                                    <action selector="pitchBackTouchUp:" destination="h73-oJ-mOy" eventType="touchUpOutside" id="ICl-FT-kho"/>
+                                    <action selector="pitchBackTouchUp:" destination="h73-oJ-mOy" eventType="touchUpInside" id="NCt-pH-kb0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUD-YR-5jB">
+                                <rect key="frame" x="266" y="424" width="149" height="87"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.46068960428237915" green="0.94368475675582886" blue="0.24074661731719971" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Monter">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="gazUpTouchDown:" destination="h73-oJ-mOy" eventType="touchDown" id="fbV-z5-9HA"/>
+                                    <action selector="gazUpTouchUp:" destination="h73-oJ-mOy" eventType="touchUpOutside" id="UId-NF-llf"/>
+                                    <action selector="gazUpTouchUp:" destination="h73-oJ-mOy" eventType="touchUpInside" id="ied-De-8rU"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mU6-iN-eGY">
+                                <rect key="frame" x="816" y="662" width="131" height="73"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.22610932588577271" green="0.15061071515083313" blue="0.5289340615272522" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         <viewLayoutGuide key="safeArea" id="H3w-nH-mSG"/>
                     </view>
                     <navigationItem key="navigationItem" id="K1Q-PR-YJ1"/>
                     <connections>
+                        <outlet property="batteryLabel" destination="mU6-iN-eGY" id="885-Jw-q4O"/>
                         <outlet property="takeOffLandBt" destination="etA-Sa-mEa" id="heh-vY-pip"/>
-                        <outlet property="videoView" destination="sKx-8h-4DA" id="ial-zg-v4e"/>
+                        <outlet property="videoView" destination="sKx-8h-4DA" id="iMW-qc-UiH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ixc-40-qLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -170,7 +187,7 @@
             <objects>
                 <viewController id="PTr-gs-vva" customClass="DeviceListVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="983-Gt-M2l">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="728"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <connections>
@@ -546,17 +563,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.down" catalog="system" width="60" height="64"/>
-        <image name="arrow.left" catalog="system" width="64" height="48"/>
-        <image name="arrow.right" catalog="system" width="64" height="48"/>
-        <image name="arrow.up" catalog="system" width="60" height="64"/>
-        <image name="backward.fill" catalog="system" width="64" height="38"/>
-        <image name="forward.fill" catalog="system" width="64" height="38"/>
         <image name="phantom-p4-1701166_1920" width="1920" height="1073"/>
-        <image name="questionmark" catalog="system" width="48" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="2x9-6X-hZh"/>
-        <segue reference="hHN-rz-AWI"/>
+        <segue reference="ovC-Of-wCu"/>
     </inferredMetricsTieBreakers>
 </document>

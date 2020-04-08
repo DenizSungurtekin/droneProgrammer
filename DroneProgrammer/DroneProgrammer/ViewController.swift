@@ -36,6 +36,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
 //      connect the drone and the service name when the view is loading
         super.viewDidLoad()
 
+
         stateSem = DispatchSemaphore(value: 0)
         bebopDrone = BebopDrone(service: service)
         bebopDrone?.delegate = self
@@ -54,6 +55,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
             connectionAlertView?.show(connectionAlertView!,
                                       sender: connectionAlertView!)
         }
+        
     }
     
 
@@ -98,8 +100,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
     }
 
     func bebopDrone(_ bebopDrone: BebopDrone?, batteryDidChange batteryPercentage: CInt) {
-//        set the battery label (not used)
-        //batteryLabel.text = "\(batteryPercentage)%%"
+        batteryLabel.text = "Batterie du drone: \(batteryPercentage)%"
     }
 
     func bebopDrone(_ bebopDrone: BebopDrone?, flyingStateDidChange state: eARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE) {
@@ -122,13 +123,19 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
 
     func bebopDrone(_ bebopDrone: BebopDrone?, configureDecoder codec: ARCONTROLLER_Stream_Codec_t) -> Bool {
 //        enable video view (configure)
+        print("configure videView")
         return videoView.configureDecoder(codec)
     }
 
     func bebopDrone(_ bebopDrone: BebopDrone?, didReceive frame: UnsafeMutablePointer<ARCONTROLLER_Frame_t>) -> Bool {
 //        enable video view (display video)
+        //print("should display videView")
+        
         return videoView.displayFrame(frame)
     }
+    
+    
+
 
     func bebopDrone(_ bebopDrone: BebopDrone?, didFoundMatchingMedias nbMedias: UInt) {
 //        download media
@@ -249,6 +256,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
 
     @IBAction func gazUpTouchDown(_ sender: Any) {
 //        move up when button is pressed
+  
         bebopDrone?.setGaz(50)
     }
     
@@ -320,6 +328,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
         
 
     }
+
 
 //    (yaw not used)
 
