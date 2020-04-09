@@ -93,7 +93,7 @@ class Gestionnaire: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             // delete the table view row
             print("delete Row")
-            files.remove(at: indexPath.row);
+            files.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
 
         }

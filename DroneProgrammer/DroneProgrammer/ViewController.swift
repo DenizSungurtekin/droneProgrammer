@@ -9,8 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate {
-//    View controller of the "free flight"
 
+    
+//    View controller of the "free flight"
+    //var errorAlertView: UIAlertController
     var connectionAlertView: UIAlertController?
     var downloadAlertController: UIAlertController?
     var downloadProgressView: UIProgressView?
@@ -30,7 +32,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
     @IBOutlet var videoView: H264VideoView!
     @IBOutlet var batteryLabel: UILabel!
     @IBOutlet var takeOffLandBt: UIButton!
-    @IBOutlet var downloadMediasBt: UIButton!
+    @IBOutlet var seeFlightPhotosBtn: UIButton!
     
     override func viewDidLoad() {
 //      connect the drone and the service name when the view is loading
@@ -45,6 +47,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
             title: service?.name,
             message: "Connecting...",
             preferredStyle: .alert)
+        seeFlightPhotosBtn.isHidden = true;
     }
 
     
@@ -83,7 +86,30 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
             })
         })
     }
-
+    
+    // download Medias function:
+    func bebopDrone(_ bebopDrone: BebopDrone!, didFoundMatchingMedias nbMedias: UInt) {
+        if nbMedias > 0 {
+            
+            print(Int(nbMedias))
+             var errorAlertView = UIAlertController(
+                title: "Media Download",
+                message: "Found \(nbMedias) to download",
+                preferredStyle: .alert)
+            errorAlertView.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func bebopDrone(_ bebopDrone: BebopDrone!, media mediaName: String!, downloadDidProgress progress: Int32) {
+        print("\(mediaName): a progresse de: \(progress)")
+    }
+    
+    func bebopDrone(_ bebopDrone: BebopDrone!, mediaDownloadDidFinish mediaName: String!) {
+        print("\(mediaName ): Download finish" )
+        
+    }
     // MARK: BebopDroneDelegate
     func bebopDrone(_ bebopDrone: BebopDrone?, connectionDidChange state: eARCONTROLLER_DEVICE_STATE) {
 //        control the connection state of the device and navigate between the views
@@ -134,65 +160,6 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
         return videoView.displayFrame(frame)
     }
     
-    
-
-
-    func bebopDrone(_ bebopDrone: BebopDrone?, didFoundMatchingMedias nbMedias: UInt) {
-//        download media
-        nbMaxDownload = Int(nbMedias)
-        currentDownloadIndex = 1
-        if nbMedias > 0 {
-            downloadAlertController?.message = "Downloading medias"
-            let customVC = UIViewController()
-            downloadProgressView = UIProgressView(progressViewStyle: .default)
-            downloadProgressView?.progress = 0
-            customVC.view.addSubview(downloadProgressView!)
-            customVC.view.addConstraint(
-                NSLayoutConstraint(
-                    item: downloadProgressView!,
-                    attribute: .centerX,
-                    relatedBy: .equal,
-                    toItem: customVC.view,
-                    attribute: .centerX,
-                    multiplier: 1.0,
-                    constant: 0.0)
-                )
-            customVC.view.addConstraint(
-                NSLayoutConstraint(
-                    item: downloadProgressView!,
-                    attribute: .bottom,
-                    relatedBy: .equal,
-                    toItem: customVC.view.safeAreaLayoutGuide.bottomAnchor,
-                    attribute: .top,
-                    multiplier: 1.0,
-                    constant: -20.0)
-                )
-            downloadAlertController?.setValue(customVC, forKey: "contentViewController")
-        } else {
-            downloadAlertController?.dismiss(animated: true, completion: {() -> Void in
-                self.downloadProgressView = nil
-                self.downloadAlertController = nil
-            })
-        }
-    }
-    
-    func bebopDrone(_ bebopDrone: BebopDrone?, media mediaName: String?, downloadDidProgress progress: CInt) {
-//        manage the download of the media
-        let completedProgress = Float(currentDownloadIndex - 1) / Float(nbMaxDownload)
-        let currentProgress = Float(Double(progress) / 100.0) / Float(nbMaxDownload)
-        downloadProgressView?.progress = (completedProgress + currentProgress)
-    }
-
-    func bebopDrone(_ bebopDrone: BebopDrone?, mediaDownloadDidFinish mediaName: String?) {
-//        check if the download is over
-        currentDownloadIndex += 1
-        if currentDownloadIndex > nbMaxDownload {
-            downloadAlertController?.dismiss(animated: true, completion: {() -> Void in
-                self.downloadProgressView = nil
-                self.downloadAlertController = nil
-            })
-        }
-    }
 
     // MARK: buttons click
     @IBAction func emergencyClicked(_ sender: Any) {
@@ -207,6 +174,9 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
             bebopDrone?.takeOff()
         case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_FLYING, ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_HOVERING:
             bebopDrone?.land()
+            bebopDrone?.flightPhoto()
+            seeFlightPhotosBtn.isHidden = false;
+
         default:
             break
         }
@@ -215,11 +185,13 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
     @IBAction func takePictureClicked(_ sender: Any) {
 //        take picture button (not used)
         bebopDrone?.takePicture()
+        
+
     }
 
     @IBAction func downloadMediasClicked(_ sender: Any) {
 //        download media button (not used)
-        downloadAlertController?.dismiss(animated: true) {() -> Void in }
+        /*downloadAlertController?.dismiss(animated: true) {() -> Void in }
         downloadAlertController = UIAlertController(title: "Download", message: "Fetching medias", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(_ action: UIAlertAction?) -> Void in
             self.bebopDrone?.cancelDownloadMedias()
@@ -250,8 +222,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
                 constant: -20.0)
             )
         downloadAlertController!.setValue(customVC, forKey: "contentViewController")
-        present(downloadAlertController!, animated: true) {() -> Void in }
-        bebopDrone?.downloadMedias()
+        present(downloadAlertController!, animated: true) {() -> Void in }*/
     }
 
     @IBAction func gazUpTouchDown(_ sender: Any) {

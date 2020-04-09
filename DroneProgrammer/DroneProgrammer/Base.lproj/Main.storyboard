@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -159,13 +160,30 @@
                                     <action selector="gazUpTouchUp:" destination="h73-oJ-mOy" eventType="touchUpInside" id="ied-De-8rU"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sni-AK-nG3">
+                                <rect key="frame" x="105" y="675" width="130" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Prendre une photo"/>
+                                <connections>
+                                    <action selector="takePictureClicked:" destination="h73-oJ-mOy" eventType="touchUpInside" id="OM1-sz-JmC"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mU6-iN-eGY">
-                                <rect key="frame" x="816" y="662" width="131" height="73"/>
+                                <rect key="frame" x="686" y="658" width="274" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7cS-ek-dwv">
+                                <rect key="frame" x="369" y="694" width="140" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="UKw-XS-aVb" kind="show" id="IKK-a3-i9O"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -181,6 +199,48 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ixc-40-qLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2545.8984375" y="-770.3125"/>
+        </scene>
+        <!--DownloadVC-->
+        <scene sceneID="Zij-IJ-pMX">
+            <objects>
+                <viewController id="UKw-XS-aVb" customClass="DownloadVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="E7L-gk-RDy">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="E0N-L6-XG5">
+                                <rect key="frame" x="35" y="73" width="879" height="555"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="M7R-Z5-nRB">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U3c-XI-K5h">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Aoe-GF-1VW">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="eqP-y0-BIW"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="mFh-Zn-UhR"/>
+                    <connections>
+                        <outlet property="Flight_photos" destination="E0N-L6-XG5" id="vp1-H9-FOP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8DX-T3-EK8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3286.5234375" y="-770.3125"/>
         </scene>
         <!--Device ListVC-->
         <scene sceneID="BXc-3e-7hY">
@@ -498,36 +558,6 @@
             </objects>
             <point key="canvasLocation" x="2431.640625" y="906.25"/>
         </scene>
-        <!--Obstacle Liste View-->
-        <scene sceneID="mn2-uM-7aM">
-            <objects>
-                <viewController id="Fqq-zU-p1Q" customClass="ObstacleListeView" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qnD-iu-JFu">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="daZ-Xk-q1d">
-                            <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Save changes"/>
-                            <connections>
-                                <segue destination="zrV-bP-eZS" kind="show" identifier="toPlanDeVol" id="2x9-6X-hZh"/>
-                            </connections>
-                        </button>
-                        <connections>
-                            <outlet property="dataSource" destination="Fqq-zU-p1Q" id="Snb-WP-GLR"/>
-                            <outlet property="delegate" destination="Fqq-zU-p1Q" id="nHA-Zf-F7q"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="jfA-dA-X0u"/>
-                    <connections>
-                        <outlet property="tableView" destination="qnD-iu-JFu" id="Ky6-ap-AH3"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i7g-wE-rP7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2259" y="2133"/>
-        </scene>
         <!--Gestionnaire-->
         <scene sceneID="c9i-Q6-Z1b">
             <objects>
@@ -566,7 +596,7 @@
         <image name="phantom-p4-1701166_1920" width="1920" height="1073"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2x9-6X-hZh"/>
+        <segue reference="NrM-VX-ggE"/>
         <segue reference="ovC-Of-wCu"/>
     </inferredMetricsTieBreakers>
 </document>

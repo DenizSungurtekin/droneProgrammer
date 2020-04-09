@@ -30,6 +30,7 @@
 		C32DA83B241A842000A4C2FE /* BebopDrone.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA837241A842000A4C2FE /* BebopDrone.m */; };
 		C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA839241A842000A4C2FE /* SDCardModule.m */; };
 		C32DA83F241A843D00A4C2FE /* H264VideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA83D241A843D00A4C2FE /* H264VideoView.m */; };
+		C340073E243E1AAD009E3A15 /* DownloadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C340073D243E1AAD009E3A15 /* DownloadVC.swift */; };
 		C34DC4AF2431F13F001A3450 /* comandeListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4AE2431F13F001A3450 /* comandeListeView.swift */; };
 		C34DC4B12431FB2B001A3450 /* ObstacleListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */; };
 		C34DC4B32431FB63001A3450 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4B22431FB63001A3450 /* Obstacle.swift */; };
@@ -105,6 +106,7 @@
 		C32DA83A241A842000A4C2FE /* SDCardModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDCardModule.h; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Drones/SDCardModule.h; sourceTree = "<group>"; };
 		C32DA83D241A843D00A4C2FE /* H264VideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = H264VideoView.m; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Views/H264VideoView.m; sourceTree = "<group>"; };
 		C32DA83E241A843D00A4C2FE /* H264VideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = H264VideoView.h; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Views/H264VideoView.h; sourceTree = "<group>"; };
+		C340073D243E1AAD009E3A15 /* DownloadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVC.swift; sourceTree = "<group>"; };
 		C34DC4AE2431F13F001A3450 /* comandeListeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comandeListeView.swift; sourceTree = "<group>"; };
 		C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleListeView.swift; sourceTree = "<group>"; };
 		C34DC4B22431FB63001A3450 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				C32DA82D241A83A800A4C2FE /* DeviceListVC.m */,
 				A0EE5A9F20B5839300FC3959 /* AppDelegate.swift */,
 				A0EE5AA120B5839300FC3959 /* ViewController.swift */,
+				C340073D243E1AAD009E3A15 /* DownloadVC.swift */,
 				A01E31E220F25D9E00F09C67 /* FlightPlanVC.swift */,
 				A0FE75C720F50860001EB855 /* Interpreter.swift */,
 				A01E31DD20F2433D00F09C67 /* SelectionVC.swift */,
@@ -410,6 +413,7 @@
 				C32DA830241A83A800A4C2FE /* BebopVC.m in Sources */,
 				C3BCB74F243732E7003C7A20 /* SimulationView.swift in Sources */,
 				A0EE5AA220B5839300FC3959 /* ViewController.swift in Sources */,
+				C340073E243E1AAD009E3A15 /* DownloadVC.swift in Sources */,
 				C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */,
 				8D187A672433966F00C91D82 /* File.swift in Sources */,
 				C32DA82F241A83A800A4C2FE /* DeviceListVC.m in Sources */,

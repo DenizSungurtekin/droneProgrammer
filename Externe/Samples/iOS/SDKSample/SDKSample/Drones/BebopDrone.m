@@ -72,6 +72,10 @@
     return _flyingState;
 }
 
+-(void) flightPhoto {
+     [_sdCardModule getFlightMedias:_currentRunId];
+}
+
 - (void)createDeviceControllerWithService:(ARService*)service {
     // first get a discovery device
     _discoveryDevice = [self createDiscoveryDeviceWithService:service];
