@@ -109,7 +109,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
     func bebopDrone(_ bebopDrone: BebopDrone!, mediaDownloadDidFinish mediaName: String!) {
         print("\(mediaName ): Download finish" )
         let gestionnaire = GestionnaireImage.init()
-        gestionnaire.getImages();
+        //gestionnaire.getImages();
         
     }
     // MARK: BebopDroneDelegate
@@ -184,7 +184,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
         }
     }
 
-    @IBAction func takePictureClicked(_ sender: Any) {
+    /*@IBAction func takePictureClicked(_ sender: Any) {
 //        take picture button (not used)
         bebopDrone?.takePicture()
         
@@ -225,7 +225,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
             )
         downloadAlertController!.setValue(customVC, forKey: "contentViewController")
         present(downloadAlertController!, animated: true) {() -> Void in }*/
-    }
+    }*/
 
     @IBAction func gazUpTouchDown(_ sender: Any) {
 //        move up when button is pressed
