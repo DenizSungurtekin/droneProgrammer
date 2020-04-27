@@ -47,7 +47,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
             title: service?.name,
             message: "Connecting...",
             preferredStyle: .alert)
-        seeFlightPhotosBtn.isHidden = true;
+        //seeFlightPhotosBtn.isHidden = true;
     }
 
     
@@ -92,7 +92,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
         if nbMedias > 0 {
             
             print(Int(nbMedias))
-             var errorAlertView = UIAlertController(
+            let errorAlertView = UIAlertController(
                 title: "Media Download",
                 message: "Found \(nbMedias) to download",
                 preferredStyle: .alert)
@@ -103,11 +103,13 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
     }
     
     func bebopDrone(_ bebopDrone: BebopDrone!, media mediaName: String!, downloadDidProgress progress: Int32) {
-        print("\(mediaName): a progresse de: \(progress)")
+       // print("\(mediaName): a progresse de: \(progress)")
     }
     
     func bebopDrone(_ bebopDrone: BebopDrone!, mediaDownloadDidFinish mediaName: String!) {
         print("\(mediaName ): Download finish" )
+        let gestionnaire = GestionnaireImage.init()
+        gestionnaire.getImages();
         
     }
     // MARK: BebopDroneDelegate
@@ -175,7 +177,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
         case ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_FLYING, ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_HOVERING:
             bebopDrone?.land()
             bebopDrone?.flightPhoto()
-            seeFlightPhotosBtn.isHidden = false;
+            //seeFlightPhotosBtn.isHidden = false;
 
         default:
             break
