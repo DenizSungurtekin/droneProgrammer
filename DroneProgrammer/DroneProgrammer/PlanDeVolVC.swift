@@ -60,7 +60,6 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         super.viewDidLoad()
         if sauvegarde.listeCommande.count != 0{
             listeCommande = sauvegarde.listeCommande
-            //listeObstacle = Obstacle.init(x: sauvegarde.listeObstacle[0][0], y: sauvegarde.listeObstacle[0][1], z: sauvegarde.listeObstacle[0][2])
             obstacleListe = sauvegarde.listeObstacle
             for element in obstacleListe {
                 tmpObs.append(Obstacle.init(x: element[0], y: element[1], z: element[2]))
@@ -85,11 +84,24 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        // Cas ou la liste est vide on ne peut pas lancer la simulation
+        if listeCommande.count == 0  {
+            errorAlertView = UIAlertController(
+                title: "La liste de commande est erronée",
+                message: "Veuillez vous s'assurer que la liste ne soit pas vide",
+                preferredStyle: .alert)
+            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView!, animated: true, completion: nil)
+            
+        }
+            
+        else {
         if segue.identifier == "toSimulation"{
             let simulationView = segue.destination as! SimulationView;
             simulationView.tmpObs = self.listeObstacle;
             simulationView.tmpCmd = self.listeCommande;
             
+                }
         }
     }
     
@@ -192,12 +204,22 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     }
     @IBAction func addObstalcle(_sender: Any){
         
+        // On s'assure que les obstacles ne soit pas hors de notre cube de simulation
+        if (posXentree.text! as NSString).integerValue < -10 || (posXentree.text! as NSString).integerValue > 10 || (posYentree.text! as NSString).integerValue < -10 || (posYentree.text! as NSString).integerValue > 10 || (posZentree.text! as NSString).integerValue < -10 || (posZentree.text! as NSString).integerValue > 10 {
+            errorAlertView = UIAlertController(
+                title: "Obstacle hors du champ de la simulation",
+                message: "Veuillez entrer des valeurs entre -10 et 10",
+                preferredStyle: .alert)
+            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView!, animated: true, completion: nil)
+            
+        }
+        else {
         if (isStringAnInt(string: posXentree.text!) && isStringAnInt(string: posYentree.text!) && isStringAnInt(string: posZentree.text!)){
             let posX = (posXentree.text! as NSString).integerValue;
             let posY = (posYentree.text! as NSString).integerValue;
             let posZ = (posZentree.text! as NSString).integerValue;
             let obs = Obstacle.init(x: posX, y: posY, z: posZ);
-            //print (obs.write());
             listeObstacle.insert(obs, at: listeObstacle.endIndex);
             
             tableView.beginUpdates()
@@ -215,6 +237,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         }
         
     }
+}
     @IBAction func cleanCommand (_sender: Any){
         
         let size = self.listeCommande.count-1
