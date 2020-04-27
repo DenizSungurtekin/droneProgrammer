@@ -84,15 +84,68 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // Cas ou la liste est vide on ne peut pas lancer la simulation
-        if listeCommande.count == 0  {
+        
+        
+        // Cas ou la liste est vide on ne peut pas lancer la simulation, utilisation de guard pour eviter de calculer listeCommande[0] si la liste est vide.
+        guard listeCommande.count != 0  else {
             errorAlertView = UIAlertController(
                 title: "La liste de commande est erronée",
                 message: "Veuillez vous s'assurer que la liste ne soit pas vide",
                 preferredStyle: .alert)
             errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(errorAlertView!, animated: true, completion: nil)
-            
+            return
+        }
+        
+        // Gestion d'erreur lié à la semantique de nos commandes
+
+        // On s'assure que le premier élément est l'action décoller
+        if listeCommande[0] != 0  {
+            errorAlertView = UIAlertController(
+                title: "La liste de commande est erronée",
+                message: "Veuillez vous s'assurer que la première commande est le décollage",
+                preferredStyle: .alert)
+            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView!, animated: true, completion: nil)
+        }
+        // On s'assure que le dernier élément est l'action atterir
+        if listeCommande[listeCommande.count-1] != 1  {
+            errorAlertView = UIAlertController(
+                title: "La liste de commande est erronée",
+                message: "Veuillez vous s'assurer que la dernière commande est l'attérissage'",
+                preferredStyle: .alert)
+            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView!, animated: true, completion: nil)
+        }
+        
+        // On compte le nombre d'occurence de la commande décoller et atterir pour vérifier leur unicité (pas de fonction prédéfinis sur swift)
+        var listeAtterir: [Int] = [];
+        var listeDecoller: [Int] = [];
+        for element in listeCommande {
+            if element == 0{
+                listeDecoller.append(0)
+            }
+            if element == 1{
+                listeAtterir.append(1)
+            }
+        }
+        // On s'assure que le décollage est unique
+        if listeDecoller.count > 1  {
+            errorAlertView = UIAlertController(
+                title: "La liste de commande est erronée",
+                message: "Veuillez vous que la commande décoller est unique",
+                preferredStyle: .alert)
+            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView!, animated: true, completion: nil)
+        }
+        // On s'assure que l'attérissage est unique
+        if listeAtterir.count > 1  {
+            errorAlertView = UIAlertController(
+                title: "La liste de commande est erronée",
+                message: "Veuillez vous que la commande attérire est unique",
+                preferredStyle: .alert)
+            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(errorAlertView!, animated: true, completion: nil)
         }
             
         else {
@@ -275,11 +328,12 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     var jsonData = try Data(contentsOf: jsonURL)
                     let files = try JSONDecoder().decode([Fichier].self, from: jsonData) // On lit tout les fichiers présents dans le JSON afin de pouvoir les              réecrire (Obligation lié au format JSON)
                     var topLevel: [AnyObject] = [];
+                    var noms: [String] = []; // Permet de vérifier si une sauvegarde ne possède pas un nom déjà utilisé.
                     
                     // On ajoute les fichiers déjà présent dans le JSON
                     for singlefile in files {
                         var fileDictionnary : [String : AnyObject] = [:];
-                        
+                        noms.append(singlefile.nom)
                         fileDictionnary["nom"] = singlefile.nom as AnyObject;
                         fileDictionnary["ListeCommande"] = singlefile.listeCommande as AnyObject;
                         fileDictionnary["ListeObstacle"] = singlefile.listeObstacle as AnyObject;
@@ -290,24 +344,41 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     // On ajoute le fichier ajouté
                     var fileDictionnary : [String : AnyObject] = [:];
                     let nomFichierTest = NomPlan.text!;
-                    
-                    var liste: [[Int]] = []
-                    for element in listeObstacle {
-                        liste.append(element.toJson())
+                    if !noms.contains(nomFichierTest) {
+                
+                        var liste: [[Int]] = [];
+                        for element in listeObstacle {
+                            liste.append(element.toJson())
                     }
                     
-                    let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste);
-                    fileDictionnary["nom"] = fichier.name as AnyObject;
-                    fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
-                    fileDictionnary["ListeObstacle"] = fichier.liste as AnyObject;
-                    topLevel.append(fileDictionnary as AnyObject);
-                    jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
+                        let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste)
+                        fileDictionnary["nom"] = fichier.name as AnyObject;
+                        fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
+                        fileDictionnary["ListeObstacle"] = fichier.liste as AnyObject;
+                        topLevel.append(fileDictionnary as AnyObject);
+                        jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
                        
-                    let fileManager = FileManager.default;
-                    url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                    jsonURL = url.appendingPathComponent("flight_plan.json");
-                    print(jsonURL)
-                    try jsonData.write(to: jsonURL); // On encode sous le format JSON la totalité des fichiers
+                        let fileManager = FileManager.default;
+                        url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
+                        jsonURL = url.appendingPathComponent("flight_plan.json");
+                        print(jsonURL);
+                        try jsonData.write(to: jsonURL); // On encode sous le format JSON la totalité des fichiers
+                        errorAlertView = UIAlertController(
+                            title: "Sauvegarde effectué",
+                            message: "Vous pouvez donc désormais la charger depuis le gestionnaire",
+                            preferredStyle: .alert)
+                        errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(errorAlertView!, animated: true, completion: nil)
+                    
+                    }
+                    else {
+                        errorAlertView = UIAlertController(
+                             title: "Nom de sauvegarde déjà utilisé",
+                             message: "Veuillez trouver un autre nom de sauvegarde",
+                             preferredStyle: .alert)
+                         errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                         self.present(errorAlertView!, animated: true, completion: nil)
+                    }
                     
                 } catch {
                     print(error)
@@ -336,6 +407,12 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     let jsonURL = url.appendingPathComponent("flight_plan.json"); // URL du fichier JSON
                     print(jsonURL)
                     try jsonData.write(to: jsonURL);
+                    errorAlertView = UIAlertController(
+                        title: "Sauvegarde effectué",
+                        message: "Vous pouvez donc désormais la charger depuis le gestionnaire",
+                        preferredStyle: .alert)
+                    errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlertView!, animated: true, completion: nil)
         
                  } catch {
                      print(error)

@@ -54,58 +54,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     func prepare(){
         self.commandes = tmpCmd;
         self.obstacles = tmpObs;
-        // Gestion d'erreur lié à la semantique de nos commandes
-             
-
-             // On s'assure que le premier élément est l'action décoller
-             if self.commandes[0] != 0  {
-                 errorAlertView = UIAlertController(
-                     title: "La liste de commande est erronée",
-                     message: "Veuillez vous s'assurer que la première commande est le décollage",
-                     preferredStyle: .alert)
-                 errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                 self.present(errorAlertView!, animated: true, completion: nil)
-             }
-             // On s'assure que le dernier élément est l'action atterir
-             if self.commandes[commandes.count-1] != 1  {
-                 errorAlertView = UIAlertController(
-                     title: "La liste de commande est erronée",
-                     message: "Veuillez vous s'assurer que la dernière commande est l'attérissage'",
-                     preferredStyle: .alert)
-                 errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                 self.present(errorAlertView!, animated: true, completion: nil)
-             }
         
-        
-        // On compte le nombre d'occurence de la commande décoller et atterir pour vérifier leur unicité (pas de fonction prédéfinis sur swift)
-        var listeAtterir: [Int] = [];
-        var listeDecoller: [Int] = [];
-        for element in commandes {
-            if element == 0{
-                listeDecoller.append(0)
-            }
-            if element == 1{
-                listeAtterir.append(1)
-            }
-        }
-        // On s'assure que le décollage est unique
-        if listeDecoller.count > 1  {
-            errorAlertView = UIAlertController(
-                title: "La liste de commande est erronée",
-                message: "Veuillez vous que la commande décoller est unique",
-                preferredStyle: .alert)
-            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(errorAlertView!, animated: true, completion: nil)
-        }
-        // On s'assure que l'attérissage est unique
-        if listeAtterir.count > 1  {
-            errorAlertView = UIAlertController(
-                title: "La liste de commande est erronée",
-                message: "Veuillez vous que la commande attérire est unique",
-                preferredStyle: .alert)
-            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(errorAlertView!, animated: true, completion: nil)
-        }
         self.view.addSubview(sceneView)
         self.sceneView.autoenablesDefaultLighting = true
         self.sceneView.allowsCameraControl = true
@@ -116,7 +65,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
               let camera = SCNCamera()
               
               cameraNode.camera = camera
-              cameraNode.position = SCNVector3(x: 35, y: 15, z: 3)
+              cameraNode.position = SCNVector3(x: 15, y: -3, z: 30)
               if obstacles.count > 0 {        // Met en place les obstacles
                   for element in obstacles {
                       let sphereTmp = SCNSphere(radius: 0.5)
@@ -152,10 +101,10 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
         let decollage = SCNAction.moveBy(x: 0, y: 1, z: 0, duration: 1);
         let monter = SCNAction.moveBy(x: 0, y: 1, z: 0, duration: 1);
         let descendre = SCNAction.moveBy(x: 0, y: -1, z: 0, duration: 1);
-        let droite = SCNAction.moveBy(x: 0, y: 0, z: -1, duration: 1);
-        let gauche = SCNAction.moveBy(x: 0, y: 0, z: 1, duration: 1);
-        let avancer = SCNAction.moveBy(x: 1, y: 0, z: 0, duration: 1);
-        let reculer = SCNAction.moveBy(x: -1, y: 0, z: 0, duration: 1);
+        let droite = SCNAction.moveBy(x: 1, y: 0, z: 0, duration: 1);
+        let gauche = SCNAction.moveBy(x: -1, y: 0, z: 0, duration: 1);
+        let avancer = SCNAction.moveBy(x: 0, y: 0, z: -1, duration: 1);
+        let reculer = SCNAction.moveBy(x: 0, y: 0, z: 1, duration: 1);
         var position = sphereNode.position;
         
         
@@ -165,6 +114,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
         
         var sequences: [SCNAction] = [];
         var flagToBreakObstacle: Bool = false
+        var flagPosition: Bool = false
         print("Position before sequenceies loop: ",position)
         getSequencies: for element in commandes {
            switch element{
@@ -176,7 +126,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                    let atterisage = SCNAction.moveBy(x: 0, y: -CGFloat(monterDescendre), z: 0, duration: 1)
                    sequences.append(atterisage)
                    monterDescendre = 0
-                   position.y = 0
+                   position.y = -10
                case 2:
                    sequences.append(droite)
                    gaucheDroit += 1
@@ -187,12 +137,12 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                    position.x = position.x - 1
                case 4:
                    sequences.append(avancer)
-                   avancerReculer += 1
-                   position.z = position.z + 1
-               case 5:
-                   sequences.append(reculer)
                    avancerReculer -= 1
                    position.z = position.z - 1
+               case 5:
+                   sequences.append(reculer)
+                   avancerReculer += 1
+                   position.z = position.z + 1
                 
                case 6:
                    sequences.append(monter)
@@ -211,38 +161,60 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                     print("Touch an Obstacle")
                     flagToBreakObstacle = true
                 }
+                
             }
-            if flagToBreakObstacle{
+            if position.x < -10 || position.x > 10 || position.y < -10 || position.y > 10 || position.z < -10 || position.z > 10 {
+                flagPosition = true
+                
+                
+            }
+            if flagToBreakObstacle || flagPosition{
                 break getSequencies;
             }
         }
-        let simulationEndedAction = SCNAction.customAction(duration: 0, action: {_,_ in self.simulationEnded = true})
-        sequences.append(simulationEndedAction);
+        // Collision avec un obstacle
         let moveSequence = SCNAction.sequence(sequences)
-        self.sphereNode.runAction(moveSequence){
-            let positionFinale: SCNVector3 = SCNVector3(x: Float(0+gaucheDroit), y: Float(-10+monterDescendre), z: Float(0+avancerReculer))
+        self.sphereNode.runAction(moveSequence) {
+            
             if flagToBreakObstacle{
-                self.errorAlertView = UIAlertController(
-                    title: " !!!!!!!!! CRASH !!!!!!!!!",
-                    message: "L'analyse du plan de vol nous indique le drone c'est crashé avec un obstacle",
-                    preferredStyle: .alert)
-                self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(self.errorAlertView!, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                                    self.errorAlertView = UIAlertController(
+                                        title: " !!!!!!!!! CRASH !!!!!!!!!",
+                                        message: "L'analyse du plan de vol nous indique le drone c'est crashé avec un obstacle",
+                                        preferredStyle: .alert)
+                                    self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    self.present(self.errorAlertView!, animated: true, completion: nil)
+                }
                 
-            }else if positionFinale.x < -10 || positionFinale.x > 10 || positionFinale.y < -10 || positionFinale.y > 10 || positionFinale.z < -10 || positionFinale.z > 10 {
-                print("Erreur, dehors de la boite")
-                self.errorAlertView = UIAlertController(
-                            title: "Le drone a atterrie hors du champ de simulation",
-                            message: "Veuillez entrer une liste de commande sensée",
-                            preferredStyle: .alert)
-                self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(self.errorAlertView!, animated: true, completion: nil)
+            }else if flagPosition {
+                DispatchQueue.main.async {
+                    
+                    self.errorAlertView = UIAlertController(
+                                         title: "Le drone est sorti de la zone de simulation",
+                                         message: "Veuillez entrer une liste de commande adéquate",
+                                         preferredStyle: .alert)
+                             self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                             self.present(self.errorAlertView!, animated: true, completion: nil)
+                    
+                }
+         
             }
             else{
                 DispatchQueue.main.async { // Correct
+                    
+                    self.errorAlertView = UIAlertController(
+                                title: "La simulation s'est bien déroulé",
+                                message: "Vous pouvez donc désormais lancer le trajet sur le drone",
+                                preferredStyle: .alert)
+                    self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(self.errorAlertView!, animated: true, completion: nil)
                     self.LaunchDroneBtn.isHidden = false
+
                 }
+                
+
             }
+            
         }
         
     }
