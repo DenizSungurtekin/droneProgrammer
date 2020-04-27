@@ -205,7 +205,7 @@
             <objects>
                 <viewController id="UKw-XS-aVb" customClass="DownloadVC" customModule="DroneProgrammer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E7L-gk-RDy">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="728"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NiA-I3-YpH">
@@ -247,7 +247,7 @@
             <objects>
                 <viewController id="PTr-gs-vva" customClass="DeviceListVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="983-Gt-M2l">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="728"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <connections>
@@ -549,10 +549,28 @@
                     <view key="view" contentMode="scaleToFill" id="obU-bE-ZuO">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efn-kR-JtM">
+                                <rect key="frame" x="46" y="81" width="51" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Launch"/>
+                                <connections>
+                                    <action selector="simulateWith_sender:" destination="gdV-tb-ooW" eventType="touchUpInside" id="Ufh-w0-IYV"/>
+                                </connections>
+                            </button>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Zg-qq-6mR">
+                                <rect key="frame" x="102" y="120" width="495" height="628"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </sceneKitView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="VaE-zo-rwU"/>
                     </view>
                     <navigationItem key="navigationItem" id="zyY-ev-8e4"/>
+                    <connections>
+                        <outlet property="LaunchSimulation" destination="efn-kR-JtM" id="9Co-SL-jgo"/>
+                        <outlet property="sceneView" destination="7Zg-qq-6mR" id="c7y-Uf-fet"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o0P-bI-CWb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -597,6 +615,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="NrM-VX-ggE"/>
-        <segue reference="hHN-rz-AWI"/>
+        <segue reference="ovC-Of-wCu"/>
     </inferredMetricsTieBreakers>
 </document>
