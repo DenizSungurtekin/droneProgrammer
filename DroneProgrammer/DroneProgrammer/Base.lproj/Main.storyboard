@@ -551,23 +551,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efn-kR-JtM">
-                                <rect key="frame" x="46" y="81" width="51" height="30"/>
+                                <rect key="frame" x="20" y="81" width="153" height="83"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Launch"/>
+                                <state key="normal" title="Launch Simulation"/>
                                 <connections>
                                     <action selector="simulateWith_sender:" destination="gdV-tb-ooW" eventType="touchUpInside" id="Ufh-w0-IYV"/>
                                 </connections>
                             </button>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Zg-qq-6mR">
-                                <rect key="frame" x="102" y="120" width="495" height="628"/>
+                                <rect key="frame" x="245" y="81" width="744" height="654"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </sceneKitView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLB-zG-4Q7">
+                                <rect key="frame" x="20" y="184" width="153" height="83"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Launch Drone"/>
+                                <connections>
+                                    <action selector="sendDroneWith_sender:" destination="gdV-tb-ooW" eventType="touchUpInside" id="X4d-ag-aXD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="VaE-zo-rwU"/>
                     </view>
                     <navigationItem key="navigationItem" id="zyY-ev-8e4"/>
                     <connections>
+                        <outlet property="LaunchDroneBtn" destination="MLB-zG-4Q7" id="gID-eJ-haf"/>
                         <outlet property="LaunchSimulation" destination="efn-kR-JtM" id="9Co-SL-jgo"/>
                         <outlet property="sceneView" destination="7Zg-qq-6mR" id="c7y-Uf-fet"/>
                     </connections>

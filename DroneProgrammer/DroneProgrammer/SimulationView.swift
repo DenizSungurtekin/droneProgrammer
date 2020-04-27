@@ -33,7 +33,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     var tmpObs: [Obstacle] = [];
     var obstacleVectors: [SCNVector3] = [];
     
-
+    @IBOutlet var LaunchDroneBtn: UIButton!
     @IBOutlet var LaunchSimulation: UIButton!
     
     // SceneKit declaration
@@ -47,6 +47,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        LaunchDroneBtn.isHidden = true
         prepare()
             
     }
@@ -219,6 +220,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
         sequences.append(simulationEndedAction);
         let moveSequence = SCNAction.sequence(sequences)
         self.sphereNode.runAction(moveSequence){
+            let positionFinale: SCNVector3 = SCNVector3(x: Float(0+gaucheDroit), y: Float(-10+monterDescendre), z: Float(0+avancerReculer))
             if flagToBreakObstacle{
                 self.errorAlertView = UIAlertController(
                     title: " !!!!!!!!! CRASH !!!!!!!!!",
@@ -226,25 +228,25 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                     preferredStyle: .alert)
                 self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(self.errorAlertView!, animated: true, completion: nil)
+                
+            }else if positionFinale.x < -10 || positionFinale.x > 10 || positionFinale.y < -10 || positionFinale.y > 10 || positionFinale.z < -10 || positionFinale.z > 10 {
+                print("Erreur, dehors de la boite")
+                self.errorAlertView = UIAlertController(
+                            title: "Le drone a atterrie hors du champ de simulation",
+                            message: "Veuillez entrer une liste de commande sensée",
+                            preferredStyle: .alert)
+                self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(self.errorAlertView!, animated: true, completion: nil)
+            }
+            else{
+                DispatchQueue.main.async { // Correct
+                    self.LaunchDroneBtn.isHidden = false
+                }
             }
         }
         
-        
-         // Calcul de la position finale de la sphère pour savoir si on dépasse le cube à la fin du trajet
-        let positionFinale: SCNVector3 = SCNVector3(x: Float(0+gaucheDroit), y: Float(-10+monterDescendre), z: Float(0+avancerReculer))
-        print(positionFinale)
-        
-        if positionFinale.x < -10 || positionFinale.x > 10 || positionFinale.y < -10 || positionFinale.y > 10 || positionFinale.z < -10 || positionFinale.z > 10 {
-            print("Erreur, dehors de la boite")
-            errorAlertView = UIAlertController(
-                title: "Le drone a atterrie hors du champ de simulation",
-                message: "Veuillez entrer une liste de commande sensée",
-                preferredStyle: .alert)
-            errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(errorAlertView!, animated: true, completion: nil)
-        }
-       
-       
+    }
+    @IBAction func sendDrone(_sender: Any){
         
     }
 }
