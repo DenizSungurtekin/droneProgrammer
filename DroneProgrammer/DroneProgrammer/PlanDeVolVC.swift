@@ -289,17 +289,34 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             let posX = (posXentree.text! as NSString).integerValue;
             let posY = (posYentree.text! as NSString).integerValue;
             let posZ = (posZentree.text! as NSString).integerValue;
+            
             let obs = Obstacle.init(x: posX, y: posY, z: posZ);
-            
-            // On initialise un objectif pour vérifier si il n y en a pas avec les memes coordonées
-            //let obj = Objectif.init(x: posX, y: posY, z: posZ);
-
-     
+           
+            // Cas ou un objectif avec les même coordonné existe déja
+            let obj = Objectif.init(x: posX, y: posY, z: posZ)
+            var equal: Bool = false;
+            for element in listeObjectif {
+                if element == obj {
+                    equal = true
+                }
+            }
+            if equal {
+                errorAlertView = UIAlertController(
+                    title: "Objectif avec les même coordonné existant",
+                    message: "Veuillez entrer des valeurs différente ou supprimer l'objectif en question",
+                    preferredStyle: .alert)
+                errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(errorAlertView!, animated: true, completion: nil)
+            }
+                
+            else {
+                
             listeObstacle.insert(obs, at: listeObstacle.endIndex);
-            
             tableView.beginUpdates()
             tableView.insertRows(at: [IndexPath(row: self.listeObstacle.count-1, section: 1)], with: .automatic)
             tableView.endUpdates()
+                
+            }
             
         }
         else {
@@ -332,11 +349,32 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 let posY = (posYentree.text! as NSString).integerValue;
                 let posZ = (posZentree.text! as NSString).integerValue;
                 let obj = Objectif.init(x: posX, y: posY, z: posZ);
-                listeObjectif.insert(obj, at: listeObjectif.endIndex);
                 
+                // Cas ou un obstacle au même coordonné existe déja
+                let obs = Obstacle.init(x: posX, y: posY, z: posZ)
+                var equal: Bool = false;
+                for element in listeObstacle {
+                    if element == obs {
+                        equal = true
+                    }
+                }
+                if equal {
+                    errorAlertView = UIAlertController(
+                        title: "Obstacle avec les même coordonné existant",
+                        message: "Veuillez entrer des valeurs différente ou supprimer l'obstacle en question",
+                        preferredStyle: .alert)
+                    errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlertView!, animated: true, completion: nil)
+                }
+                    
+                else {
+                listeObjectif.insert(obj, at: listeObjectif.endIndex);
 //                tableView.beginUpdates()
 //                tableView.insertRows(at: [IndexPath(row: self.listeObstacle.count-1, section: 1)], with: .automatic)
 //                tableView.endUpdates()
+
+                  }
+                    //FAIRE EQUIVALENT QUE POUR ADDOBJECTIF MATHIAS TABLEVIEW
                 
             }
             else {

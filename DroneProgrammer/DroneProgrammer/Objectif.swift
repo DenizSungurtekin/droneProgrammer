@@ -24,9 +24,9 @@ class Objectif: Decodable {
     func toJson() -> [Int] {
         return [self.posX,self.posY,self.posZ]
     }
-//    static func ==(lhs: Objectif, rhs: Objectif) -> Bool {
-//        return lhs.posX == rhs.posX && lhs.posY == rhs.posY && lhs.posZ == rhs.posZ
-//    }
+    static func ==(lhs: Objectif, rhs: Objectif) -> Bool {
+        return lhs.posX == rhs.posX && lhs.posY == rhs.posY && lhs.posZ == rhs.posZ
+    }
     
     
 }
