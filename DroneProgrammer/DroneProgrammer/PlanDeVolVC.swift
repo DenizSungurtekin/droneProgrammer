@@ -30,7 +30,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     var sauvegarde:Fichier
     
     required init?(coder aDecoder: NSCoder) {
-        sauvegarde = Fichier.init(listeCommande: listeCommande,listeObstacle: [[1,2]], nom: "SauvegardeParDefault");
+        sauvegarde = Fichier.init(listeCommande: listeCommande,listeObstacle: [[1,2]],listeObjectif: [[1,2]], nom: "SauvegardeParDefault"); // Obliger d'initialiser une sauvegarde random
         
         super.init(coder: aDecoder)
         
@@ -49,11 +49,14 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         7---> Descendre
      */
     var listeObstacle :[Obstacle] = [];
+    var listeObjectif: [Objectif] = [];
     var tmpCmd: [Int] = [];
     var tmpObs: [Obstacle] = [];
+    var tmpObj: [Objectif] = [];
     
     let cellReuseIdentifier = "cell";
     var obstacleListe : [[Int]] = [];
+    var objectifListe : [[Int]] = [];
     
     
     override func viewDidLoad() {
@@ -61,8 +64,14 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         if sauvegarde.listeCommande.count != 0{
             listeCommande = sauvegarde.listeCommande
             obstacleListe = sauvegarde.listeObstacle
+            objectifListe = sauvegarde.listeObjectif
+            
             for element in obstacleListe {
                 tmpObs.append(Obstacle.init(x: element[0], y: element[1], z: element[2]))
+                tmpObj.append(Objectif.init(x: element[0], y: element[1], z: element[2]))
+            }
+            for element in objectifListe {
+                tmpObj.append(Objectif.init(x: element[0], y: element[1], z: element[2]))
             }
         }
         
@@ -74,6 +83,11 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         if tmpObs.count != 0 {
             listeObstacle = tmpObs;
         }
+        
+        if tmpObj.count != 0 {
+            listeObjectif = tmpObj;
+        }
+        
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier);
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -153,6 +167,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             let simulationView = segue.destination as! SimulationView;
             simulationView.tmpObs = self.listeObstacle;
             simulationView.tmpCmd = self.listeCommande;
+            simulationView.tmpObj = self.listeObjectif;
             
                 }
         }
@@ -181,6 +196,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         }else if  indexPath.section == 1{
             cell.textLabel?.text = self.listeObstacle[indexPath.row].write();
         }
+        // SUREMENT QQCH A RAJOUTER POUR OBJECTIF
 
         return cell
     }
@@ -267,12 +283,18 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             self.present(errorAlertView!, animated: true, completion: nil)
             
         }
+
         else {
         if (isStringAnInt(string: posXentree.text!) && isStringAnInt(string: posYentree.text!) && isStringAnInt(string: posZentree.text!)){
             let posX = (posXentree.text! as NSString).integerValue;
             let posY = (posYentree.text! as NSString).integerValue;
             let posZ = (posZentree.text! as NSString).integerValue;
             let obs = Obstacle.init(x: posX, y: posY, z: posZ);
+            
+            // On initialise un objectif pour vérifier si il n y en a pas avec les memes coordonées
+            //let obj = Objectif.init(x: posX, y: posY, z: posZ);
+
+     
             listeObstacle.insert(obs, at: listeObstacle.endIndex);
             
             tableView.beginUpdates()
@@ -291,6 +313,45 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         
     }
 }
+    
+    @IBAction func addObjectif(_ sender: Any) {
+        
+            // On s'assure que les obstacles ne soit pas hors de notre cube de simulation
+            if (posXentree.text! as NSString).integerValue < -10 || (posXentree.text! as NSString).integerValue > 10 || (posYentree.text! as NSString).integerValue < -10 || (posYentree.text! as NSString).integerValue > 10 || (posZentree.text! as NSString).integerValue < -10 || (posZentree.text! as NSString).integerValue > 10 {
+                errorAlertView = UIAlertController(
+                    title: "Objectif hors du champ de la simulation",
+                    message: "Veuillez entrer des valeurs entre -10 et 10",
+                    preferredStyle: .alert)
+                errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(errorAlertView!, animated: true, completion: nil)
+                
+            }
+            else {
+            if (isStringAnInt(string: posXentree.text!) && isStringAnInt(string: posYentree.text!) && isStringAnInt(string: posZentree.text!)){
+                let posX = (posXentree.text! as NSString).integerValue;
+                let posY = (posYentree.text! as NSString).integerValue;
+                let posZ = (posZentree.text! as NSString).integerValue;
+                let obj = Objectif.init(x: posX, y: posY, z: posZ);
+                listeObjectif.insert(obj, at: listeObjectif.endIndex);
+                
+//                tableView.beginUpdates()
+//                tableView.insertRows(at: [IndexPath(row: self.listeObstacle.count-1, section: 1)], with: .automatic)
+//                tableView.endUpdates()
+                
+            }
+            else {
+                errorAlertView = UIAlertController(
+                    title: "Error in coordonate input",
+                    message: "Please enter a number",
+                    preferredStyle: .alert)
+                errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(errorAlertView!, animated: true, completion: nil)
+            }
+            
+        }
+        
+    }
+    
     @IBAction func cleanCommand (_sender: Any){
         
         let size = self.listeCommande.count-1
@@ -315,7 +376,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = NSURL(fileURLWithPath: path)
         
-        if let pathComponent = url.appendingPathComponent("flight_plan.json"){
+        if let pathComponent = url.appendingPathComponent("flight_plans.json"){
             let filePath = pathComponent.path
             let fileManager = FileManager.default
             // Vérifie si le fichier existe
@@ -324,7 +385,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 // Cas ou un fichier existe déja
                 do {
                     var url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                    var jsonURL = url.appendingPathComponent("flight_plan.json");
+                    var jsonURL = url.appendingPathComponent("flight_plans.json");
                     var jsonData = try Data(contentsOf: jsonURL)
                     let files = try JSONDecoder().decode([Fichier].self, from: jsonData) // On lit tout les fichiers présents dans le JSON afin de pouvoir les              réecrire (Obligation lié au format JSON)
                     var topLevel: [AnyObject] = [];
@@ -337,6 +398,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                         fileDictionnary["nom"] = singlefile.nom as AnyObject;
                         fileDictionnary["ListeCommande"] = singlefile.listeCommande as AnyObject;
                         fileDictionnary["ListeObstacle"] = singlefile.listeObstacle as AnyObject;
+                        fileDictionnary["ListeObjectif"] = singlefile.listeObjectif as AnyObject;
                         topLevel.append(fileDictionnary as AnyObject);
 
                     }
@@ -346,21 +408,26 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     let nomFichierTest = NomPlan.text!;
                     if !noms.contains(nomFichierTest) {
                 
-                        var liste: [[Int]] = [];
+                        var liste: [[Int]] = [];  // Obstacle
+                        var liste2: [[Int]] = []; // Objectif
                         for element in listeObstacle {
                             liste.append(element.toJson())
                     }
+                            for element in listeObjectif {
+                                liste2.append(element.toJson())
+                        }
                     
-                        let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste)
+                        let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste, liste2: liste2)
                         fileDictionnary["nom"] = fichier.name as AnyObject;
                         fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
                         fileDictionnary["ListeObstacle"] = fichier.liste as AnyObject;
+                        fileDictionnary["ListeObjectif"] = fichier.liste2 as AnyObject;
                         topLevel.append(fileDictionnary as AnyObject);
                         jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
                        
                         let fileManager = FileManager.default;
                         url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                        jsonURL = url.appendingPathComponent("flight_plan.json");
+                        jsonURL = url.appendingPathComponent("flight_plans.json");
                         print(jsonURL);
                         try jsonData.write(to: jsonURL); // On encode sous le format JSON la totalité des fichiers
                         errorAlertView = UIAlertController(
@@ -369,6 +436,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                             preferredStyle: .alert)
                         errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(errorAlertView!, animated: true, completion: nil)
+                        print(jsonURL)
                     
                     }
                     else {
@@ -386,25 +454,30 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 
             } else {
                 
-                var liste: [[Int]] = []
+                var liste: [[Int]] = [];
+                var liste2: [[Int]] = [];
                 for element in listeObstacle {
                     liste.append(element.toJson())
                 }
+                for element in listeObjectif {
+                    liste2.append(element.toJson())
+                }
                 // Cas ou le fichier n'existe pas (Première sauvegarde)
                 let nomFichierTest = NomPlan.text!;
-                let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste);
+                let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste, liste2: liste2);
                 var topLevel: [AnyObject] = []
                 var fileDictionnary : [String : AnyObject] = [:];
                 fileDictionnary["nom"] = fichier.name as AnyObject;
                 fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
                 fileDictionnary["ListeObstacle"] = fichier.liste as AnyObject;
+                fileDictionnary["ListeObjectif"] = fichier.liste2 as AnyObject;
                 topLevel.append(fileDictionnary as AnyObject);
                 
                  do {
                     let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
                     let fileManager = FileManager.default;
                     let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                    let jsonURL = url.appendingPathComponent("flight_plan.json"); // URL du fichier JSON
+                    let jsonURL = url.appendingPathComponent("flight_plans.json"); // URL du fichier JSON
                     print(jsonURL)
                     try jsonData.write(to: jsonURL);
                     errorAlertView = UIAlertController(

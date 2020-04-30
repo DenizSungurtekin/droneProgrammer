@@ -29,9 +29,12 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     
     var commandes: [Int] = [];
     var obstacles: [Obstacle] = [];
+    var objectifs: [Objectif] = [];
     var tmpCmd: [Int] = [];
     var tmpObs: [Obstacle] = [];
+    var tmpObj: [Objectif] = [];
     var obstacleVectors: [SCNVector3] = [];
+    var objectifVectors: [SCNVector3] = [];
     
     @IBOutlet var LaunchDroneBtn: UIButton!
     @IBOutlet var LaunchSimulation: UIButton!
@@ -54,6 +57,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     func prepare(){
         self.commandes = tmpCmd;
         self.obstacles = tmpObs;
+        self.objectifs = tmpObj;
         
         self.view.addSubview(sceneView)
         self.sceneView.autoenablesDefaultLighting = true
@@ -66,6 +70,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
               
               cameraNode.camera = camera
               cameraNode.position = SCNVector3(x: 15, y: -3, z: 30)
+        
               if obstacles.count > 0 {        // Met en place les obstacles
                   for element in obstacles {
                       let sphereTmp = SCNSphere(radius: 0.5)
@@ -76,11 +81,22 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                       scene.rootNode.addChildNode(sphereTmpNode)
                   }
               }
+        
+        if objectifs.count > 0 {        // Met en place les obstacles
+            for element in objectifs {
+                let anneauTmp = SCNTorus(ringRadius: 0.5, pipeRadius: 0.1)
+                anneauTmp.firstMaterial?.diffuse.contents = UIColor.green
+                let anneauTmpNode = SCNNode(geometry: anneauTmp)
+                anneauTmpNode.position = SCNVector3(x: Float(element.posX), y: Float(element.posY), z: Float(element.posZ))
+                objectifVectors += [anneauTmpNode.position]
+                scene.rootNode.addChildNode(anneauTmpNode)
+            }
+        }
 
         self.cubeNode = SCNNode(geometry: cubeGeometry)
         cubeGeometry.firstMaterial?.diffuse.contents = UIColor.brown
         cubeGeometry.firstMaterial?.transparency = 0.5
-        self.sphere.firstMaterial?.diffuse.contents = UIColor.green
+        self.sphere.firstMaterial?.diffuse.contents = UIColor.blue
         self.sphereNode = SCNNode(geometry: self.sphere)
         scene.rootNode.addChildNode(self.cameraNode)
         scene.rootNode.addChildNode(self.cubeNode)

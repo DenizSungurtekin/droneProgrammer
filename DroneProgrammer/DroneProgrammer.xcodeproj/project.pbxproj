@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D187A672433966F00C91D82 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D187A662433966F00C91D82 /* File.swift */; };
+		8D5D33AE245A4DAA003EBF9C /* Objectif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5D33AD245A4DAA003EBF9C /* Objectif.swift */; };
 		8D7253DC2435D14800DCB015 /* Gestionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7253DB2435D14800DCB015 /* Gestionnaire.swift */; };
 		A0080EDB20E7B43800852BAC /* DeviceVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0080EDA20E7B43800852BAC /* DeviceVCViewController.swift */; };
 		A01E31DE20F2433D00F09C67 /* SelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01E31DD20F2433D00F09C67 /* SelectionVC.swift */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		8D187A662433966F00C91D82 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		8D5D33AD245A4DAA003EBF9C /* Objectif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objectif.swift; sourceTree = "<group>"; };
 		8D7253DB2435D14800DCB015 /* Gestionnaire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gestionnaire.swift; sourceTree = "<group>"; };
 		A0080EDA20E7B43800852BAC /* DeviceVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVCViewController.swift; sourceTree = "<group>"; };
 		A01E31DD20F2433D00F09C67 /* SelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectionVC.swift; path = ../SelectionVC.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				C340073F2440BC02009E3A15 /* GestionnaireImage.swift */,
 				A081EF9920F7938300D48F84 /* TestingVC.swift */,
 				C3C9857824276E8800473045 /* PlanDeVolVC.swift */,
+				8D5D33AD245A4DAA003EBF9C /* Objectif.swift */,
 				8D7253DB2435D14800DCB015 /* Gestionnaire.swift */,
 				C34DC4AE2431F13F001A3450 /* comandeListeView.swift */,
 				C34DC4B22431FB63001A3450 /* Obstacle.swift */,
@@ -415,6 +418,7 @@
 				A0EE5AA220B5839300FC3959 /* ViewController.swift in Sources */,
 				C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */,
 				C34007402440BC02009E3A15 /* GestionnaireImage.swift in Sources */,
+				8D5D33AE245A4DAA003EBF9C /* Objectif.swift in Sources */,
 				8D187A672433966F00C91D82 /* File.swift in Sources */,
 				C32DA82F241A83A800A4C2FE /* DeviceListVC.m in Sources */,
 				C32DA83F241A843D00A4C2FE /* H264VideoView.m in Sources */,

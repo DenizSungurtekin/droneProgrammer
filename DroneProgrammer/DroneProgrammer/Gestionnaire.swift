@@ -52,13 +52,13 @@ class Gestionnaire: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             let fileManager = FileManager.default
             
-            if url.appendingPathComponent("flight_plan.json") != nil{
+            if url.appendingPathComponent("flight_plans.json") != nil{
                 //let filePath = pathComponent.path
                     
                 do {
                     let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
                     
-                    let jsonURL = url.appendingPathComponent("flight_plan.json");
+                    let jsonURL = url.appendingPathComponent("flight_plans.json");
                     print(jsonURL)
                     var jsonData = try Data(contentsOf: jsonURL)
                     let files = try JSONDecoder().decode([Fichier].self, from: jsonData) // On lit tout les fichiers présents dans le JSON afin de pouvoir les              réecrire (Obligation lié au format JSON)
@@ -79,6 +79,7 @@ class Gestionnaire: UIViewController, UITableViewDelegate, UITableViewDataSource
                         fileDictionnary["nom"] = nameInJson;
                         fileDictionnary["ListeCommande"] = singlefile.listeCommande as AnyObject;
                         fileDictionnary["ListeObstacle"] = singlefile.listeObstacle as AnyObject;
+                        fileDictionnary["ListeObjectif"] = singlefile.listeObjectif as AnyObject;
                         topLevel.append(fileDictionnary as AnyObject);
                         counter += 1;
                         }
@@ -116,7 +117,7 @@ class Gestionnaire: UIViewController, UITableViewDelegate, UITableViewDataSource
                do {
                 let fileManager = FileManager.default;
                 let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
-                let jsonURL = url.appendingPathComponent("flight_plan.json");
+                let jsonURL = url.appendingPathComponent("flight_plans.json");
                 let jsonData = try Data(contentsOf: jsonURL);
                 self.files = try JSONDecoder().decode([Fichier].self, from: jsonData); // On lit toute les sauvegardes
                    
