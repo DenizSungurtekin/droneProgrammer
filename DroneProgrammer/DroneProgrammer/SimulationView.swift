@@ -160,9 +160,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                             }
                         }
                    }
-                   sequences.append(atterisage)
-                   monterDescendre = 0
-                   position.y = -10
+                   
                case 2:
                    sequences.append(droite)
                    gaucheDroit += 1
