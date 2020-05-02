@@ -305,7 +305,22 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     equal = true
                 }
             }
-            if equal {
+            var flagExist = false
+            for obsExistant in self.listeObstacle {
+                if posX == obsExistant.posX && posY == obsExistant.posY && posZ == obsExistant.posZ
+                {
+                    flagExist = true
+                }
+            }
+            if flagExist{
+                errorAlertView = UIAlertController(
+                                       title: "Obstacle avec les même coordonné existant",
+                                       message: "Veuillez entrer des valeurs différente ",
+                                       preferredStyle: .alert)
+                                   errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                   self.present(errorAlertView!, animated: true, completion: nil)
+            }
+            else if equal {
                 errorAlertView = UIAlertController(
                     title: "Objectif avec les même coordonné existant",
                     message: "Veuillez entrer des valeurs différente ou supprimer l'objectif en question",
@@ -363,7 +378,22 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                         equal = true
                     }
                 }
-                if equal {
+                var flagExist = false
+                for objExistant in self.listeObjectif {
+                    if posX == objExistant.posX && posY == objExistant.posY && posZ == objExistant.posZ
+                    {
+                        flagExist = true
+                    }
+                }
+                if flagExist{
+                    errorAlertView = UIAlertController(
+                                           title: "Objectifs avec les même coordonné existant",
+                                           message: "Veuillez entrer des valeurs différente ",
+                                           preferredStyle: .alert)
+                                       errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                       self.present(errorAlertView!, animated: true, completion: nil)
+                }
+                else if equal {
                     errorAlertView = UIAlertController(
                         title: "Obstacle avec les même coordonné existant",
                         message: "Veuillez entrer des valeurs différente ou supprimer l'obstacle en question",
@@ -371,6 +401,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(errorAlertView!, animated: true, completion: nil)
                 }
+                
                     
                 else {
                     listeObjectif.insert(obj, at: listeObjectif.endIndex);
@@ -378,6 +409,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     tableView.insertRows(at: [IndexPath(row: self.listeObjectif.count-1, section: 2)], with: .automatic)
                     tableView.endUpdates()
                   }
+
                 
             }
             else {
