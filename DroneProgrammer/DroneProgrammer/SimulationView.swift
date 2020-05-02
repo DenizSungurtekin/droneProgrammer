@@ -114,7 +114,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
         
     
         sphereNode.position = SCNVector3(x: 0, y: -10, z: 0)
-
+        var counter = self.objectifs.count;
         
         let decollage = SCNAction.moveBy(x: 0, y: 1, z: 0, duration: 1);
         let monter = SCNAction.moveBy(x: 0, y: 1, z: 0, duration: 1);
@@ -142,6 +142,24 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                    position.y = position.y + 1;
                case 1:
                    let atterisage = SCNAction.moveBy(x: 0, y: -CGFloat(monterDescendre), z: 0, duration: 1)
+                   while position.y != -10 {
+                        sequences.append(descendre)
+                        position.y -= 1;
+                        for obsVec in self.obstacleVectors{
+                            if SCNVector3EqualToVector3(obsVec, position){
+                                print("Touch an Obstacle")
+                                flagToBreakObstacle = true
+                            }
+                        }
+                        for (ind,obj) in self.objectifVectors.enumerated(){
+                            if SCNVector3EqualToVector3(obj, position)
+                            {
+                                let currentObj = self.sphereListe[ind];
+                                currentObj.firstMaterial?.diffuse.contents = UIColor.green;
+                                counter -= 1;
+                            }
+                        }
+                   }
                    sequences.append(atterisage)
                    monterDescendre = 0
                    position.y = -10
@@ -185,10 +203,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                 {
                     let currentObj = self.sphereListe[ind];
                     currentObj.firstMaterial?.diffuse.contents = UIColor.green;
-                    print(self.objectifs.count)
-                    print(ind)
-                    print(self.objectifs[ind].write())
-                    self.objectifs.removeFirst()
+                    counter -= 1;
                 }
             }
             if position.x < -10 || position.x > 10 || position.y < -10 || position.y > 10 || position.z < -10 || position.z > 10 {
@@ -230,7 +245,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
             else{
 
                 DispatchQueue.main.async { // Correct
-                    if self.objectifs.count == 0{
+                    if counter == 0{
                         self.errorAlertView = UIAlertController(
                                     title: "La simulation s'est bien déroulé",
                                     message: "Vous pouvez donc désormais lancer le trajet sur le drone",
