@@ -174,11 +174,11 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let data = [listeCommande.count, listeObstacle.count]
+        let data = [listeCommande.count, listeObstacle.count,listeObjectif.count]
         return data[section]
     }
     
@@ -195,8 +195,9 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             cell.textLabel?.text = self.cmd[self.listeCommande[indexPath.row]];
         }else if  indexPath.section == 1{
             cell.textLabel?.text = self.listeObstacle[indexPath.row].write();
+        }else if indexPath.section == 2 {
+            cell.textLabel?.text = self.listeObjectif[indexPath.row].write();
         }
-        // SUREMENT QQCH A RAJOUTER POUR OBJECTIF
 
         return cell
     }
@@ -204,9 +205,11 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Commandes"
-        }else{
+        }else if section == 1{
            
             return "Obstacles"
+        }else {
+            return "Objectifs"
         }
     }
 
@@ -221,6 +224,8 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 self.listeCommande.remove(at: indexPath.row)
             }else if indexPath.section == 1{
                 self.listeObstacle.remove(at: indexPath.row);
+            }else if indexPath.section == 2 {
+                self.listeObjectif.remove(at: indexPath.row)
             }
 
             // delete the table view row
@@ -368,13 +373,11 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 }
                     
                 else {
-                listeObjectif.insert(obj, at: listeObjectif.endIndex);
-//                tableView.beginUpdates()
-//                tableView.insertRows(at: [IndexPath(row: self.listeObstacle.count-1, section: 1)], with: .automatic)
-//                tableView.endUpdates()
-
+                    listeObjectif.insert(obj, at: listeObjectif.endIndex);
+                    tableView.beginUpdates()
+                    tableView.insertRows(at: [IndexPath(row: self.listeObjectif.count-1, section: 2)], with: .automatic)
+                    tableView.endUpdates()
                   }
-                    //FAIRE EQUIVALENT QUE POUR ADDOBJECTIF MATHIAS TABLEVIEW
                 
             }
             else {
