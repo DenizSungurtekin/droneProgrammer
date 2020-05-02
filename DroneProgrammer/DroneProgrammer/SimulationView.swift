@@ -35,6 +35,7 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     var tmpObj: [Objectif] = [];
     var obstacleVectors: [SCNVector3] = [];
     var objectifVectors: [SCNVector3] = [];
+    var sphereListe: [SCNTorus] = [];
     
     @IBOutlet var LaunchDroneBtn: UIButton!
     @IBOutlet var LaunchSimulation: UIButton!
@@ -85,7 +86,8 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
         if objectifs.count > 0 {        // Met en place les obstacles
             for element in objectifs {
                 let anneauTmp = SCNTorus(ringRadius: 0.5, pipeRadius: 0.1)
-                anneauTmp.firstMaterial?.diffuse.contents = UIColor.green
+                anneauTmp.firstMaterial?.diffuse.contents = UIColor.black
+                self.sphereListe.append(anneauTmp);
                 let anneauTmpNode = SCNNode(geometry: anneauTmp)
                 anneauTmpNode.position = SCNVector3(x: Float(element.posX), y: Float(element.posY), z: Float(element.posZ))
                 objectifVectors += [anneauTmpNode.position]
@@ -177,7 +179,17 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                     print("Touch an Obstacle")
                     flagToBreakObstacle = true
                 }
-                
+            }
+            for (ind,obj) in self.objectifVectors.enumerated(){
+                if SCNVector3EqualToVector3(obj, position)
+                {
+                    let currentObj = self.sphereListe[ind];
+                    currentObj.firstMaterial?.diffuse.contents = UIColor.green;
+                    print(self.objectifs.count)
+                    print(ind)
+                    print(self.objectifs[ind].write())
+                    self.objectifs.removeFirst()
+                }
             }
             if position.x < -10 || position.x > 10 || position.y < -10 || position.y > 10 || position.z < -10 || position.z > 10 {
                 flagPosition = true
@@ -216,15 +228,25 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
          
             }
             else{
+
                 DispatchQueue.main.async { // Correct
-                    
-                    self.errorAlertView = UIAlertController(
-                                title: "La simulation s'est bien déroulé",
-                                message: "Vous pouvez donc désormais lancer le trajet sur le drone",
-                                preferredStyle: .alert)
-                    self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(self.errorAlertView!, animated: true, completion: nil)
-                    self.LaunchDroneBtn.isHidden = false
+                    if self.objectifs.count == 0{
+                        self.errorAlertView = UIAlertController(
+                                    title: "La simulation s'est bien déroulé",
+                                    message: "Vous pouvez donc désormais lancer le trajet sur le drone",
+                                    preferredStyle: .alert)
+                        self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(self.errorAlertView!, animated: true, completion: nil)
+                        self.LaunchDroneBtn.isHidden = false
+                    }else{
+                        self.errorAlertView = UIAlertController(
+                                     title: "Tous les obstacles n'ont pas été touché",
+                                     message: "Essayer de toucher tous les obstacles la prochaine fois",
+                                     preferredStyle: .alert)
+                         self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                         self.present(self.errorAlertView!, animated: true, completion: nil)
+                    }
+
 
                 }
                 
