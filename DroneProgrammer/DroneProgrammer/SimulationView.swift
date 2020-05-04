@@ -253,8 +253,8 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
                         self.LaunchDroneBtn.isHidden = false
                     }else{
                         self.errorAlertView = UIAlertController(
-                                     title: "Tous les obstacles n'ont pas été touché",
-                                     message: "Essayer de toucher tous les obstacles la prochaine fois",
+                                     title: "Tous les objectifs n'ont pas été touché",
+                                     message: "Essayer de toucher tous les objectifs la prochaine fois",
                                      preferredStyle: .alert)
                          self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                          self.present(self.errorAlertView!, animated: true, completion: nil)
