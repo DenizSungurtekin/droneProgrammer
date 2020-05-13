@@ -31,9 +31,6 @@
 		C32DA83B241A842000A4C2FE /* BebopDrone.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA837241A842000A4C2FE /* BebopDrone.m */; };
 		C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA839241A842000A4C2FE /* SDCardModule.m */; };
 		C32DA83F241A843D00A4C2FE /* H264VideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C32DA83D241A843D00A4C2FE /* H264VideoView.m */; };
-		C34007402440BC02009E3A15 /* GestionnaireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C340073F2440BC02009E3A15 /* GestionnaireImage.swift */; };
-		C34DC4AF2431F13F001A3450 /* comandeListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4AE2431F13F001A3450 /* comandeListeView.swift */; };
-		C34DC4B12431FB2B001A3450 /* ObstacleListeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */; };
 		C34DC4B32431FB63001A3450 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34DC4B22431FB63001A3450 /* Obstacle.swift */; };
 		C3BCB74F243732E7003C7A20 /* SimulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BCB74E243732E7003C7A20 /* SimulationView.swift */; };
 		C3C9857924276E8800473045 /* PlanDeVolVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9857824276E8800473045 /* PlanDeVolVC.swift */; };
@@ -108,9 +105,6 @@
 		C32DA83A241A842000A4C2FE /* SDCardModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDCardModule.h; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Drones/SDCardModule.h; sourceTree = "<group>"; };
 		C32DA83D241A843D00A4C2FE /* H264VideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = H264VideoView.m; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Views/H264VideoView.m; sourceTree = "<group>"; };
 		C32DA83E241A843D00A4C2FE /* H264VideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = H264VideoView.h; path = ../../Externe/Samples/iOS/SDKSample/SDKSample/Views/H264VideoView.h; sourceTree = "<group>"; };
-		C340073F2440BC02009E3A15 /* GestionnaireImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestionnaireImage.swift; sourceTree = "<group>"; };
-		C34DC4AE2431F13F001A3450 /* comandeListeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comandeListeView.swift; sourceTree = "<group>"; };
-		C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleListeView.swift; sourceTree = "<group>"; };
 		C34DC4B22431FB63001A3450 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		C3BCB74E243732E7003C7A20 /* SimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationView.swift; sourceTree = "<group>"; };
 		C3C9857824276E8800473045 /* PlanDeVolVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDeVolVC.swift; sourceTree = "<group>"; };
@@ -208,15 +202,12 @@
 				A0080EDA20E7B43800852BAC /* DeviceVCViewController.swift */,
 				C3BCB74E243732E7003C7A20 /* SimulationView.swift */,
 				A037A8CC20BC1D6400B2F101 /* DeviceVC.swift */,
-				C340073F2440BC02009E3A15 /* GestionnaireImage.swift */,
 				A081EF9920F7938300D48F84 /* TestingVC.swift */,
 				C3C9857824276E8800473045 /* PlanDeVolVC.swift */,
 				8D5D33AD245A4DAA003EBF9C /* Objectif.swift */,
 				8D7253DB2435D14800DCB015 /* Gestionnaire.swift */,
-				C34DC4AE2431F13F001A3450 /* comandeListeView.swift */,
 				C34DC4B22431FB63001A3450 /* Obstacle.swift */,
 				8D187A662433966F00C91D82 /* File.swift */,
-				C34DC4B02431FB2B001A3450 /* ObstacleListeView.swift */,
 			);
 			path = DroneProgrammer;
 			sourceTree = "<group>";
@@ -417,12 +408,10 @@
 				C3BCB74F243732E7003C7A20 /* SimulationView.swift in Sources */,
 				A0EE5AA220B5839300FC3959 /* ViewController.swift in Sources */,
 				C32DA83C241A842000A4C2FE /* SDCardModule.m in Sources */,
-				C34007402440BC02009E3A15 /* GestionnaireImage.swift in Sources */,
 				8D5D33AE245A4DAA003EBF9C /* Objectif.swift in Sources */,
 				8D187A672433966F00C91D82 /* File.swift in Sources */,
 				C32DA82F241A83A800A4C2FE /* DeviceListVC.m in Sources */,
 				C32DA83F241A843D00A4C2FE /* H264VideoView.m in Sources */,
-				C34DC4AF2431F13F001A3450 /* comandeListeView.swift in Sources */,
 				A0FE75C820F50860001EB855 /* Interpreter.swift in Sources */,
 				8D7253DC2435D14800DCB015 /* Gestionnaire.swift in Sources */,
 				A0EE5AA020B5839300FC3959 /* AppDelegate.swift in Sources */,
@@ -432,7 +421,6 @@
 				C32DA833241A83CB00A4C2FE /* AudioStreamAUBackend.m in Sources */,
 				C34DC4B32431FB63001A3450 /* Obstacle.swift in Sources */,
 				A01E31E320F25D9E00F09C67 /* FlightPlanVC.swift in Sources */,
-				C34DC4B12431FB2B001A3450 /* ObstacleListeView.swift in Sources */,
 				A081EF9A20F7938300D48F84 /* TestingVC.swift in Sources */,
 				A0080EDB20E7B43800852BAC /* DeviceVCViewController.swift in Sources */,
 			);

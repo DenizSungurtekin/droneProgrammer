@@ -108,7 +108,7 @@ class ViewController: UIViewController, BebopDroneDelegate, UIAlertViewDelegate 
     
     func bebopDrone(_ bebopDrone: BebopDrone!, mediaDownloadDidFinish mediaName: String!) {
         print("\(mediaName ): Download finish" )
-        let gestionnaire = GestionnaireImage.init()
+        //let gestionnaire = GestionnaireImage.init()
         //gestionnaire.getImages();
         
     }

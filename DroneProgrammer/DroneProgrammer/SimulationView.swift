@@ -22,10 +22,12 @@ import Foundation
 import SceneKit
 import UIKit
 
-class SimulationView: UIViewController ,UIAlertViewDelegate{
-    
+class SimulationView: UIViewController ,UIAlertViewDelegate,BebopDroneDelegate, UITableViewDelegate, UITableViewDataSource,DroneDiscovererDelegate{
+
     
     var errorAlertView: UIAlertController?
+    var connectionAlertView: UIAlertController?
+
     
     var commandes: [Int] = [];
     var obstacles: [Obstacle] = [];
@@ -39,7 +41,18 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     
     @IBOutlet var LaunchDroneBtn: UIButton!
     @IBOutlet var LaunchSimulation: UIButton!
+    @IBOutlet var droneSelected: UILabel!
     
+    //Drone declaration
+    @IBOutlet var tableView: UITableView!
+    let cellReuseIdentifier = "cell"
+    var stateSem: DispatchSemaphore?
+    let chercheur = DroneDiscoverer.init();
+    var service: ARService?
+    var droneListe:[ARService] = [];
+    var bebopDrone: BebopDrone?
+    var isDroneSelected = false;
+
     // SceneKit declaration
     @IBOutlet var sceneView: SCNView!
     let sphere = SCNSphere(radius: 0.5);
@@ -52,8 +65,37 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         LaunchDroneBtn.isHidden = true
+        droneSelected.text = "Please select a drone"
         prepare()
-            
+        tableView.dataSource = self;
+        tableView.delegate = self;
+        chercheur.startDiscovering()
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        print("connecting")
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+    //        disconnect the device when we leave the view
+            super.viewDidDisappear(animated)
+            if (connectionAlertView != nil) {
+                connectionAlertView?.dismiss(animated: false, completion: nil)
+            }
+            connectionAlertView = UIAlertController(
+                title: service?.name,
+                message: "Disconnecting ...",
+                preferredStyle: .alert
+                )
+            connectionAlertView?.show(connectionAlertView!, sender: connectionAlertView!)
+            // in background, disconnect from the drone
+            DispatchQueue.global(qos: .default).async(execute: {() -> Void in
+                self.bebopDrone?.disconnect()
+                // wait for the disconnection to appear
+                self.stateSem?.wait(timeout: DispatchTime.distantFuture)
+                self.bebopDrone = nil
+                // dismiss the alert view in main thread
+                DispatchQueue.main.async(execute: {() -> Void in
+                    self.connectionAlertView?.dismiss(animated: true, completion: nil)
+                })
+            })
     }
     func prepare(){
         self.commandes = tmpCmd;
@@ -269,8 +311,216 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
         }
         
     }
-    @IBAction func sendDrone(_sender: Any){
+    @IBAction func launchDrone(_sender: Any){
+        if isDroneSelected{
+            var tempsExec = 0.0
+            var indexExec = 0
+            for instruction in self.commandes{
+                switch (instruction) {
+                    case 0:
+                        // takeOff()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + tempsExec + 3.0, execute: {
+                            NSLog("takeOff")
+                            self.bebopDrone?.takeOff()
+                        })
+                        // FIXME: time of the execution
+                        tempsExec = tempsExec + 4.0 /*tabLengthCmd[indexExec]*/
+                        
+                        break
+                    
+                    case 1:
+                        // land()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec + 3.0, execute: {
+                            // FIXME: time of the execution
+                            NSLog("land")
+                            self.bebopDrone?.land()
+                        })
+                        tempsExec = tempsExec + 5.0/*tabLengthCmd[indexExec]*/
+                        break
+                    case 2:
+                        // rollRightTouchDown()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec, execute: {
+                            NSLog("begin right")
+                            self.bebopDrone?.setFlag(1)
+                            self.bebopDrone?.setRoll(50)
+                        })
+                        DispatchQueue.main.asyncAfter(deadline: .now()  + 2.0 + tempsExec + 3.0, execute: {
+                            // rollRightTouchUp()
+                            self.bebopDrone?.setFlag(0)
+                            self.bebopDrone?.setRoll(0)
+                            NSLog("end right")
+                        })
+                        tempsExec = tempsExec + 3 + 3
+                        indexExec += 1
+                        
+                        break
+                    case 3:
+                        // rollLeftTouchDown()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec, execute: {
+                            NSLog("begin left")
+                            self.bebopDrone?.setFlag(1)
+                            self.bebopDrone?.setRoll(-50)
+                        })
+                       
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec + 3.0, execute: {
+                            // rollLeftTouchUp()
+                            self.bebopDrone?.setFlag(0)
+                            self.bebopDrone?.setRoll(0)
+                            NSLog("end left")
+                        })
+                        tempsExec = tempsExec + 3.0 + 3
+                        indexExec += 1
+                        
+                        break
+                    case 4:
+                        // pitchForwardTouchDown()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec, execute: {
+                            NSLog("begin front")
+                            self.bebopDrone?.setFlag(1)
+                            self.bebopDrone?.setPitch(50)
+                        })
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec + 3.0, execute: {
+                            // pitchForwardTouchUp()
+                            self.bebopDrone?.setFlag(0)
+                            self.bebopDrone?.setPitch(0)
+                            NSLog("end front")
+                        })
+                        tempsExec = tempsExec + 3.0 + 3
+                        indexExec += 1
+                        
+                        break
+                    case 5:
+                        // pitchBackTouchDown()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec, execute: {
+                            NSLog("begin back")
+                            self.bebopDrone?.setFlag(1)
+                            self.bebopDrone?.setPitch(-50)
+                        })
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec + 3.0, execute: {
+                            // pitchBackTouchUp()
+                            self.bebopDrone?.setFlag(0)
+                            self.bebopDrone?.setPitch(0)
+                            NSLog("end back")
+                        })
+                        tempsExec = tempsExec + 3 + 4
+                        indexExec += 1
+                        
+                        break
+                    case 6:
+                        // gazUpTouchDown()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec, execute: {
+                            NSLog("begin up")
+                            self.bebopDrone?.setGaz(50)
+                        })
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec + 3.0, execute: {
+                            // gazUpTouchUp()
+                            self.bebopDrone?.setGaz(0)
+                            NSLog("end up")
+                        })
+                        tempsExec = tempsExec + 3 + 3
+                        indexExec += 1
+                        
+                        break
+                    case 7:
+                        // gazDownTouchDown()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec, execute: {
+                            NSLog("begin down")
+                            self.bebopDrone?.setGaz(-50)
+                        })
+                       
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0 + tempsExec + 3.0, execute: {
+                            // gazDownTouchUp()
+                            self.bebopDrone?.setGaz(0)
+                            NSLog("end down")
+                        })
+                        
+                        indexExec += 1
+                        
+                        break
+                    default:
+                        break
+                }
+            }
+        }else{
+            self.errorAlertView = UIAlertController(
+                        title: "Aucun drone selectionné",
+                        message: "Veuillez selectionner un drone s'il vous plaît",
+                        preferredStyle: .alert)
+            self.errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(self.errorAlertView!, animated: true, completion: nil)
+
+        }
+    }
+    
+    func droneDiscoverer(_ droneDiscoverer: DroneDiscoverer!, didUpdateDronesList dronesList: [Any]!) {
+        self.droneListe = dronesList as! [ARService]
+        self.tableView.beginUpdates()
+        self.tableView.insertRows(at: [IndexPath(row: self.droneListe.count-1, section: 0)], with: .automatic)
+        self.tableView.endUpdates()
+    }
+    
+    //TableViews function ///
+    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        //Selection of a drone
+        if self.droneListe.count != 0{
+            self.service = droneListe[indexPath.row];
+            chercheur.stopDiscovering()
+            self.bebopDrone = BebopDrone(service: self.service)
+            self.bebopDrone?.delegate = self
+            self.bebopDrone?.connect()
+            self.droneSelected.text = self.service?.name
+            self.isDroneSelected = true
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = (self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? UITableViewCell)!
         
+        if droneListe.count != 0 {
+            cell.textLabel?.text = self.droneListe[indexPath.row].name
+        }else{
+            cell.textLabel?.text = "Looking for drones..."
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { return "Liste des drones" }
+    
+    
+
+    //Drone bullshit functions
+    func bebopDrone(_ bebopDrone: BebopDrone!, connectionDidChange state: eARCONTROLLER_DEVICE_STATE) {
+        print("La connection a changé")
+    }
+    func bebopDrone(_ bebopDrone: BebopDrone!, batteryDidChange batteryPercentage: Int32) {
         
     }
+    func bebopDrone(_ bebopDrone: BebopDrone!, flyingStateDidChange state: eARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE) {}
+    func bebopDrone(_ bebopDrone: BebopDrone!, configureDecoder codec: ARCONTROLLER_Stream_Codec_t) -> Bool {
+        return true
+    }
+    func bebopDrone(_ bebopDrone: BebopDrone!, didReceive frame: UnsafeMutablePointer<ARCONTROLLER_Frame_t>!) -> Bool {
+        return true
+    }
+    func bebopDrone(_ bebopDrone: BebopDrone!, didFoundMatchingMedias nbMedias: UInt) {}
+    func bebopDrone(_ bebopDrone: BebopDrone!, media mediaName: String!, downloadDidProgress progress: Int32){}
+    func bebopDrone(_ bebopDrone: BebopDrone!, mediaDownloadDidFinish mediaName: String!) {}
+    
+
+    
 }
