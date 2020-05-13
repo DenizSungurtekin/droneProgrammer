@@ -271,5 +271,6 @@ class SimulationView: UIViewController ,UIAlertViewDelegate{
     }
     @IBAction func sendDrone(_sender: Any){
         
+        
     }
 }

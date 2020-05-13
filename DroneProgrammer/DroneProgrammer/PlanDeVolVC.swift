@@ -68,7 +68,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             
             for element in obstacleListe {
                 tmpObs.append(Obstacle.init(x: element[0], y: element[1], z: element[2]))
-                tmpObj.append(Objectif.init(x: element[0], y: element[1], z: element[2]))
+             
             }
             for element in objectifListe {
                 tmpObj.append(Objectif.init(x: element[0], y: element[1], z: element[2]))
