@@ -16,19 +16,19 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     // UI nécessaire
     var errorAlertView: UIAlertController?
     
-   //Eléments de la view
-    
+    //Eléments de la view
     @IBOutlet var NomPlan: UITextField!
     @IBOutlet var posXentree: UITextField!;
     @IBOutlet var posYentree: UITextField!;
     @IBOutlet var posZentree: UITextField!;
     
     //Table View
-    
     @IBOutlet var tableView: UITableView!
     
+    //Sauvegarde recu par le gestionnaire
     var sauvegarde:Fichier
     
+    //Initialisation par défaut
     required init?(coder aDecoder: NSCoder) {
         sauvegarde = Fichier.init(listeCommande: listeCommande,listeObstacle: [[1,2]],listeObjectif: [[1,2]], nom: "SauvegardeParDefault"); // Obliger d'initialiser une sauvegarde random
         
@@ -39,15 +39,6 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     let cmd = ["Décollage","Attérissage","Droite","Gauche","Avancer","Reculer","Monter","Descendre"]
     
     var listeCommande :[Int] = [];
-    /*  0---> Décollage
-        1---> Attérissage
-        2---> Droite
-        3---> Gauche
-        4---> Avancer
-        5---> Reculer
-        6---> monter
-        7---> Descendre
-     */
     var listeObstacle :[Obstacle] = [];
     var listeObjectif: [Objectif] = [];
     var tmpCmd: [Int] = [];
@@ -61,6 +52,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Chargement sauvgarde
         if sauvegarde.listeCommande.count != 0{
             listeCommande = sauvegarde.listeCommande
             obstacleListe = sauvegarde.listeObstacle
@@ -68,13 +60,13 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             
             for element in obstacleListe {
                 tmpObs.append(Obstacle.init(x: element[0], y: element[1], z: element[2]))
-             
+                
             }
             for element in objectifListe {
                 tmpObj.append(Objectif.init(x: element[0], y: element[1], z: element[2]))
             }
         }
-        
+    
         if tmpCmd.count != 0 {
             listeCommande = tmpCmd;
             
@@ -93,12 +85,12 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         self.tableView.dataSource = self
         
     }
-     override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
+    // Passage à la view Simulation, on s'assure de la bonne grammaire de notre liste de commande.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        
         
         // Cas ou la liste est vide on ne peut pas lancer la simulation, utilisation de guard pour eviter de calculer listeCommande[0] si la liste est vide.
         guard listeCommande.count != 0  else {
@@ -112,7 +104,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         }
         
         // Gestion d'erreur lié à la semantique de nos commandes
-
+        
         // On s'assure que le premier élément est l'action décoller
         if listeCommande[0] != 0  {
             errorAlertView = UIAlertController(
@@ -161,35 +153,35 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(errorAlertView!, animated: true, completion: nil)
         }
-            
+         // On envoit a la view Simulation
         else {
-        if segue.identifier == "toSimulation"{
-            let simulationView = segue.destination as! SimulationView;
-            simulationView.tmpObs = self.listeObstacle;
-            simulationView.tmpCmd = self.listeCommande;
-            simulationView.tmpObj = self.listeObjectif;
-            
-                }
+            if segue.identifier == "toSimulation"{
+                let simulationView = segue.destination as! SimulationView;
+                simulationView.tmpObs = self.listeObstacle;
+                simulationView.tmpCmd = self.listeCommande;
+                simulationView.tmpObj = self.listeObjectif;
+                
+            }
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let data = [listeCommande.count, listeObstacle.count,listeObjectif.count]
         return data[section]
     }
     
-
+    
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         // create a new cell if needed or reuse an old one
         let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
-
+        
         // set the text from the data model
         if indexPath.section == 0{
             cell.textLabel?.text = self.cmd[self.listeCommande[indexPath.row]];
@@ -198,7 +190,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         }else if indexPath.section == 2 {
             cell.textLabel?.text = self.listeObjectif[indexPath.row].write();
         }
-
+        
         return cell
     }
     
@@ -206,19 +198,19 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         if section == 0 {
             return "Commandes"
         }else if section == 1{
-           
+            
             return "Obstacles"
         }else {
             return "Objectifs"
         }
     }
-
-
+    
+    
     // this method handles row deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-
+        
         if editingStyle == .delete {
-
+            
             // remove the item from the data model
             if indexPath.section == 0{
                 self.listeCommande.remove(at: indexPath.row)
@@ -227,7 +219,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             }else if indexPath.section == 2 {
                 self.listeObjectif.remove(at: indexPath.row)
             }
-
+            
             // delete the table view row
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
@@ -250,7 +242,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
     }
     @IBAction func aterissageAppuyer(_sender: Any ) {
         listeCommande.insert(1, at: listeCommande.endIndex);
-      updateTableView()
+        updateTableView()
     }
     @IBAction func droiteAppuyer(_sender: Any) {
         listeCommande.insert(2, at: listeCommande.endIndex)
@@ -288,82 +280,84 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             self.present(errorAlertView!, animated: true, completion: nil)
             
         }
-
+            // Gestion de conflit
         else {
-        if (isStringAnInt(string: posXentree.text!) && isStringAnInt(string: posYentree.text!) && isStringAnInt(string: posZentree.text!)){
-            let posX = (posXentree.text! as NSString).integerValue;
-            let posY = (posYentree.text! as NSString).integerValue;
-            let posZ = (posZentree.text! as NSString).integerValue;
-            
-            let obs = Obstacle.init(x: posX, y: posY, z: posZ);
-           
-            // Cas ou un objectif avec les même coordonné existe déja
-            let obj = Objectif.init(x: posX, y: posY, z: posZ)
-            var equal: Bool = false;
-            for element in listeObjectif {
-                if element == obj {
-                    equal = true
+            // Si un string est entré dans les positions
+            if (isStringAnInt(string: posXentree.text!) && isStringAnInt(string: posYentree.text!) && isStringAnInt(string: posZentree.text!)){
+                let posX = (posXentree.text! as NSString).integerValue;
+                let posY = (posYentree.text! as NSString).integerValue;
+                let posZ = (posZentree.text! as NSString).integerValue;
+                
+                let obs = Obstacle.init(x: posX, y: posY, z: posZ);
+                
+                // Cas ou un objectif avec les même coordonné existe déja
+                let obj = Objectif.init(x: posX, y: posY, z: posZ)
+                var equal: Bool = false;
+                for element in listeObjectif {
+                    if element == obj {
+                        equal = true
+                    }
                 }
-            }
-            var flagExist = false
-            for obsExistant in self.listeObstacle {
-                if posX == obsExistant.posX && posY == obsExistant.posY && posZ == obsExistant.posZ
-                {
-                    flagExist = true
+                var flagExist = false
+                for obsExistant in self.listeObstacle {
+                    if posX == obsExistant.posX && posY == obsExistant.posY && posZ == obsExistant.posZ
+                    {
+                        flagExist = true
+                    }
                 }
+                if flagExist{
+                    errorAlertView = UIAlertController(
+                        title: "Obstacle avec les même coordonné existant",
+                        message: "Veuillez entrer des valeurs différente ",
+                        preferredStyle: .alert)
+                    errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlertView!, animated: true, completion: nil)
+                }
+                else if equal {
+                    errorAlertView = UIAlertController(
+                        title: "Objectif avec les même coordonné existant",
+                        message: "Veuillez entrer des valeurs différente ou supprimer l'objectif en question",
+                        preferredStyle: .alert)
+                    errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlertView!, animated: true, completion: nil)
+                }
+                    
+                else {
+                    // Si tout est bon on ajoute l'obstacle
+                    listeObstacle.insert(obs, at: listeObstacle.endIndex);
+                    tableView.beginUpdates()
+                    tableView.insertRows(at: [IndexPath(row: self.listeObstacle.count-1, section: 1)], with: .automatic)
+                    tableView.endUpdates()
+                    
+                }
+                
             }
-            if flagExist{
+            else {
                 errorAlertView = UIAlertController(
-                                       title: "Obstacle avec les même coordonné existant",
-                                       message: "Veuillez entrer des valeurs différente ",
-                                       preferredStyle: .alert)
-                                   errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                   self.present(errorAlertView!, animated: true, completion: nil)
-            }
-            else if equal {
-                errorAlertView = UIAlertController(
-                    title: "Objectif avec les même coordonné existant",
-                    message: "Veuillez entrer des valeurs différente ou supprimer l'objectif en question",
+                    title: "Error in coordonate input",
+                    message: "Please enter a number",
                     preferredStyle: .alert)
                 errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(errorAlertView!, animated: true, completion: nil)
             }
-                
-            else {
-                
-            listeObstacle.insert(obs, at: listeObstacle.endIndex);
-            tableView.beginUpdates()
-            tableView.insertRows(at: [IndexPath(row: self.listeObstacle.count-1, section: 1)], with: .automatic)
-            tableView.endUpdates()
-                
-            }
             
         }
-        else {
+    }
+    
+    // Meme chose que pour addObstacle
+    @IBAction func addObjectif(_ sender: Any) {
+        
+        // On s'assure que les objectifs ne soit pas hors de notre cube de simulation
+        if (posXentree.text! as NSString).integerValue < -10 || (posXentree.text! as NSString).integerValue > 10 || (posYentree.text! as NSString).integerValue < -10 || (posYentree.text! as NSString).integerValue > 10 || (posZentree.text! as NSString).integerValue < -10 || (posZentree.text! as NSString).integerValue > 10 {
             errorAlertView = UIAlertController(
-                title: "Error in coordonate input",
-                message: "Please enter a number",
+                title: "Objectif hors du champ de la simulation",
+                message: "Veuillez entrer des valeurs entre -10 et 10",
                 preferredStyle: .alert)
             errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(errorAlertView!, animated: true, completion: nil)
+            
         }
-        
-    }
-}
-    
-    @IBAction func addObjectif(_ sender: Any) {
-        
-            // On s'assure que les obstacles ne soit pas hors de notre cube de simulation
-            if (posXentree.text! as NSString).integerValue < -10 || (posXentree.text! as NSString).integerValue > 10 || (posYentree.text! as NSString).integerValue < -10 || (posYentree.text! as NSString).integerValue > 10 || (posZentree.text! as NSString).integerValue < -10 || (posZentree.text! as NSString).integerValue > 10 {
-                errorAlertView = UIAlertController(
-                    title: "Objectif hors du champ de la simulation",
-                    message: "Veuillez entrer des valeurs entre -10 et 10",
-                    preferredStyle: .alert)
-                errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(errorAlertView!, animated: true, completion: nil)
-                
-            }
-            else {
+        else {
             if (isStringAnInt(string: posXentree.text!) && isStringAnInt(string: posYentree.text!) && isStringAnInt(string: posZentree.text!)){
                 let posX = (posXentree.text! as NSString).integerValue;
                 let posY = (posYentree.text! as NSString).integerValue;
@@ -387,11 +381,11 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 }
                 if flagExist{
                     errorAlertView = UIAlertController(
-                                           title: "Objectifs avec les même coordonné existant",
-                                           message: "Veuillez entrer des valeurs différente ",
-                                           preferredStyle: .alert)
-                                       errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                       self.present(errorAlertView!, animated: true, completion: nil)
+                        title: "Objectifs avec les même coordonné existant",
+                        message: "Veuillez entrer des valeurs différente ",
+                        preferredStyle: .alert)
+                    errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlertView!, animated: true, completion: nil)
                 }
                 else if equal {
                     errorAlertView = UIAlertController(
@@ -401,15 +395,15 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                     errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(errorAlertView!, animated: true, completion: nil)
                 }
-                
+                    
                     
                 else {
                     listeObjectif.insert(obj, at: listeObjectif.endIndex);
                     tableView.beginUpdates()
                     tableView.insertRows(at: [IndexPath(row: self.listeObjectif.count-1, section: 2)], with: .automatic)
                     tableView.endUpdates()
-                  }
-
+                }
+                
                 
             }
             else {
@@ -425,6 +419,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
         
     }
     
+    //Supression des element de la tableView commande
     @IBAction func cleanCommand (_sender: Any){
         
         let size = self.listeCommande.count-1
@@ -443,6 +438,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
             self.present(errorAlertView!, animated: true, completion: nil)
         }
     }
+    // Sauvegarde en ficheir Json
     @IBAction func save(_sender: Any){
         
         // Chemin du dossier PlanVol lié au projet (Seul endroit où l'on peut écrire un fichier)
@@ -473,23 +469,23 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                         fileDictionnary["ListeObstacle"] = singlefile.listeObstacle as AnyObject;
                         fileDictionnary["ListeObjectif"] = singlefile.listeObjectif as AnyObject;
                         topLevel.append(fileDictionnary as AnyObject);
-
+                        
                     }
                     
                     // On ajoute le fichier ajouté
                     var fileDictionnary : [String : AnyObject] = [:];
                     let nomFichierTest = NomPlan.text!;
                     if !noms.contains(nomFichierTest) {
-                
+                        
                         var liste: [[Int]] = [];  // Obstacle
                         var liste2: [[Int]] = []; // Objectif
                         for element in listeObstacle {
                             liste.append(element.toJson())
-                    }
-                            for element in listeObjectif {
-                                liste2.append(element.toJson())
                         }
-                    
+                        for element in listeObjectif {
+                            liste2.append(element.toJson())
+                        }
+                        
                         let fichier = File.init(name: nomFichierTest, listeCommande: listeCommande, liste: liste, liste2: liste2)
                         fileDictionnary["nom"] = fichier.name as AnyObject;
                         fileDictionnary["ListeCommande"] = fichier.listeCommande as AnyObject;
@@ -497,7 +493,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                         fileDictionnary["ListeObjectif"] = fichier.liste2 as AnyObject;
                         topLevel.append(fileDictionnary as AnyObject);
                         jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
-                       
+                        
                         let fileManager = FileManager.default;
                         url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
                         jsonURL = url.appendingPathComponent("flight_plans.json");
@@ -510,15 +506,16 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                         errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(errorAlertView!, animated: true, completion: nil)
                         print(jsonURL)
-                    
+                        
                     }
+                        //Verifie si la sauvegarde existe déja
                     else {
                         errorAlertView = UIAlertController(
-                             title: "Nom de sauvegarde déjà utilisé",
-                             message: "Veuillez trouver un autre nom de sauvegarde",
-                             preferredStyle: .alert)
-                         errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                         self.present(errorAlertView!, animated: true, completion: nil)
+                            title: "Nom de sauvegarde déjà utilisé",
+                            message: "Veuillez trouver un autre nom de sauvegarde",
+                            preferredStyle: .alert)
+                        errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(errorAlertView!, animated: true, completion: nil)
                     }
                     
                 } catch {
@@ -546,7 +543,7 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                 fileDictionnary["ListeObjectif"] = fichier.liste2 as AnyObject;
                 topLevel.append(fileDictionnary as AnyObject);
                 
-                 do {
+                do {
                     let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted);
                     let fileManager = FileManager.default;
                     let url = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false);
@@ -559,10 +556,10 @@ class PlanDeVolVC: UIViewController, UIAlertViewDelegate, UITableViewDelegate, U
                         preferredStyle: .alert)
                     errorAlertView?.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(errorAlertView!, animated: true, completion: nil)
-        
-                 } catch {
-                     print(error)
-                 }
+                    
+                } catch {
+                    print(error)
+                }
             }
         }
     }
