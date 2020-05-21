@@ -17,7 +17,7 @@ Il y’a plusieurs moyens de piloter le drone :
 ## Fonctionnement globale de l' application :
 1. Photo storyboard
 
-1. Le cheminement de l’application est le suivant : On commence par une vue initial (qui n’est pas codée littéralement, apparait que dans le storyboard) . C’est un menu où il y’a trois options:
+1. Le storyboard de l’application est le suivant : On commence par une vue initial (qui n’est pas codée littéralement, apparait que dans le storyboard) . C’est un menu où il y’a trois options:
 	2. « Free flight »
 	
 	2. « Gestionnaire » Depuis ce gestionnaire on a une liste de plan de vol sauvegardé. Lorsqu’on choisit un plan de vol on arrive directement au mode créateur avec ce plan de vol
