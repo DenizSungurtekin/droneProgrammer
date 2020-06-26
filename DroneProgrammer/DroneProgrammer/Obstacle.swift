@@ -24,6 +24,9 @@ class Obstacle: Decodable {
     func toJson() -> [Int] {
         return [self.posX,self.posY,self.posZ]
     }
-    
+    // Fontion permettant de comparer deux objets
+    static func ==(lhs: Obstacle, rhs: Obstacle) -> Bool {
+        return lhs.posX == rhs.posX && lhs.posY == rhs.posY && lhs.posZ == rhs.posZ
+    }
     
 }

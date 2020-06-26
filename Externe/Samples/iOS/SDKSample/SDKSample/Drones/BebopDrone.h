@@ -88,7 +88,7 @@
 - (void)disconnect;
 - (eARCONTROLLER_DEVICE_STATE)connectionState;
 - (eARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE)flyingState;
-
+- (void)flightPhoto;
 - (void)emergency;
 - (void)takeOff;
 - (void)land;
